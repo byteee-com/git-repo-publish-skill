@@ -23,10 +23,12 @@ python3 "$publisher" inspect --root "$project_root" --target "$target" \
 python3 "$publisher" publish --mode create --root "$project_root" \
   --target "$target" --confirm-target "$confirmed_owner_repo" \
   --account "$account" --visibility "$visibility" \
-  --protocol "$protocol" --branch "$branch" --head "$sha"
+  --protocol "$protocol" --branch "$branch" --head "$sha" \
+  --description="$selected_description" --topic "$selected_topic"
 ```
 
-- 复用空仓库时改用 `--mode existing --repo-id "$reviewed_repo_id"`，传入已核对的真实可见性。资料用可选参数 `--description="$description"`、`--homepage="$homepage"` 和一个或多个 `--topic "$topic"`。已有不同的简介或主页时在预览里保留现值，省略相应参数。Topics 在保留已有标签的基础上添加。
+- 将预览里获选的 Description 传给 `--description`，每个获选的 Topic 各传一个 `--topic`。Website 获选时才加 `--homepage="$selected_website"`。留空或跳过的字段省略参数。
+- 复用空仓库时改用 `--mode existing --repo-id "$reviewed_repo_id"`，传入已核对的真实可见性。已有不同的简介或主页时在预览里保留现值，省略相应参数。Topics 在保留已有标签的基础上添加。
 - 脚本复核 Git 根目录、当前分支、完整提交 SHA、Git URL、远端身份、可见性和空仓库状态。新仓库关闭远端初始化。推送只创建目标分支，Git 会拒绝覆盖途中出现的不同提交。已有标签和其他本地分支留在本地。先确认 LFS 端点和上传范围，再处理含 LFS 的项目。脚本验证 Git refs，LFS 对象需要另行核对。把 push 触发的工作流影响纳入预览。
 - 完成后输出仓库链接、分支、已回读的提交和资料状态。Git 推送用临时 remote。若预览包含本地关联，推送后可复用唯一 fetch/push URL 都吻合的 remote，或用未占用的 `origin`、`github` 等名称新增。保留不同的 upstream，除非用户要求切换。普通 Git 操作继续由本机凭据配置决定。
 
