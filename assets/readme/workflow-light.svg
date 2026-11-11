@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 400" width="1280" height="400" role="img" aria-labelledby="title desc">
+  <title id="title">Publishing flow: inspect, preview, confirm, publish, verify; interrupted runs resume from inspect</title>
+  <desc id="desc">Five steps left to right. Step 03, Confirm, is highlighted: nothing is pushed until you confirm the exact owner/repo. If a publish is interrupted, the agent re-inspects and resumes the same confirmed target.</desc>
+  <style>
+    .bg { fill: #FFFFFF; }
+    .sans { font-family: "Helvetica Neue", Helvetica, -apple-system, "Segoe UI", "Noto Sans", Arial, sans-serif; }
+    .mono { font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace; }
+    .box { fill: none; stroke: #111111; stroke-width: 2; }
+    .box-accent { fill: #1F6FEB; }
+    .num { fill: #5C5C5C; font-size: 15px; letter-spacing: 1.6px; font-weight: 600; }
+    .num-on { fill: #FFFFFF; font-size: 15px; letter-spacing: 1.6px; font-weight: 600; }
+    .step { fill: #111111; font-size: 28px; font-weight: 700; letter-spacing: -0.5px; }
+    .step-on { fill: #FFFFFF; font-size: 28px; font-weight: 700; letter-spacing: -0.5px; }
+    .note { fill: #5C5C5C; font-size: 16px; }
+    .note-on { fill: #FFFFFF; font-size: 16px; }
+    .line { stroke: #111111; stroke-width: 2; fill: none; }
+    .dash { stroke: #5C5C5C; stroke-width: 2; fill: none; stroke-dasharray: 6 6; }
+    .head { fill: #111111; }
+    .head-muted { fill: #5C5C5C; }
+    .label { fill: #5C5C5C; font-size: 15px; letter-spacing: 1.6px; font-weight: 600; }
+  </style>
+
+  <rect class="bg" width="1280" height="400"/>
+
+  <text x="64" y="64" class="sans label">HOW A FIRST PUBLISH RUNS</text>
+
+  <!-- 01 Inspect -->
+  <rect class="box" x="64" y="96" width="200" height="152"/>
+  <text x="88" y="132" class="sans num">01</text>
+  <text x="88" y="180" class="sans step">Inspect</text>
+  <text x="88" y="212" class="sans note">project, accounts,</text>
+  <text x="88" y="234" class="sans note">target repo</text>
+
+  <!-- 02 Preview -->
+  <rect class="box" x="302" y="96" width="200" height="152"/>
+  <text x="326" y="132" class="sans num">02</text>
+  <text x="326" y="180" class="sans step">Preview</text>
+  <text x="326" y="212" class="sans note">SHA, owner, topics,</text>
+  <text x="326" y="234" class="sans note">files to push</text>
+
+  <!-- 03 Confirm (accent) -->
+  <rect class="box-accent" x="540" y="96" width="200" height="152"/>
+  <text x="564" y="132" class="sans num-on">03</text>
+  <text x="564" y="180" class="sans step-on">Confirm</text>
+  <text x="564" y="212" class="sans note-on">you approve the</text>
+  <text x="564" y="234" class="mono note-on">owner/repo</text>
+
+  <!-- 04 Publish -->
+  <rect class="box" x="778" y="96" width="200" height="152"/>
+  <text x="802" y="132" class="sans num">04</text>
+  <text x="802" y="180" class="sans step">Publish</text>
+  <text x="802" y="212" class="sans note">create repo,</text>
+  <text x="802" y="234" class="sans note">push one branch</text>
+
+  <!-- 05 Verify -->
+  <rect class="box" x="1016" y="96" width="200" height="152"/>
+  <text x="1040" y="132" class="sans num">05</text>
+  <text x="1040" y="180" class="sans step">Verify</text>
+  <text x="1040" y="212" class="sans note">read back repo,</text>
+  <text x="1040" y="234" class="sans note">branch and SHA</text>
+
+  <!-- connectors -->
+  <line class="line" x1="264" y1="172" x2="292" y2="172"/><polygon class="head" points="302,172 292,166 292,178"/>
+  <line class="line" x1="502" y1="172" x2="530" y2="172"/><polygon class="head" points="540,172 530,166 530,178"/>
+  <line class="line" x1="740" y1="172" x2="768" y2="172"/><polygon class="head" points="778,172 768,166 768,178"/>
+  <line class="line" x1="978" y1="172" x2="1006" y2="172"/><polygon class="head" points="1016,172 1006,166 1006,178"/>
+
+  <!-- resume branch: from Publish back to Inspect -->
+  <path class="dash" d="M878 248 V312 H164 V258"/>
+  <polygon class="head-muted" points="164,248 158,258 170,258"/>
+  <rect class="bg" x="404" y="298" width="236" height="28"/>
+  <text x="522" y="318" class="sans label" text-anchor="middle">INTERRUPTED → RESUME</text>
+  <text x="64" y="364" class="sans note">An interrupted run is re-inspected and resumed against the same confirmed target.</text>
+</svg>

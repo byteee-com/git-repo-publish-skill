@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 480" width="1280" height="480" role="img" aria-labelledby="title desc">
+  <title id="title">github-repo-publish: preview, confirm, and verify a project's first publish to GitHub</title>
+  <desc id="desc">An Agent Skill for Codex, Claude Code, Cursor, Gemini CLI, and OpenCode. Requires git, gh, and Python 3.8+ on macOS or Linux.</desc>
+  <style>
+    .bg { fill: #FFFFFF; }
+    .sans { font-family: "Helvetica Neue", Helvetica, -apple-system, "Segoe UI", "Noto Sans", Arial, sans-serif; }
+    .mono { font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace; }
+    .title { fill: #111111; font-size: 96px; font-weight: 700; letter-spacing: -4px; }
+    .sub { fill: #111111; font-size: 30px; }
+    .index { fill: #5C5C5C; font-size: 16px; letter-spacing: 1.6px; font-weight: 600; }
+    .label { fill: #5C5C5C; font-size: 15px; letter-spacing: 1.6px; font-weight: 600; }
+    .value { fill: #111111; font-size: 22px; font-weight: 500; }
+    .rule { stroke: #111111; }
+    .accent { fill: #1F6FEB; }
+  </style>
+
+  <rect class="bg" width="1280" height="480"/>
+
+  <g class="sans">
+    <text x="64" y="80" class="index">AGENT SKILL — FIRST PUBLISH</text>
+    <text x="1216" y="80" class="index" text-anchor="end">GITHUB.COM</text>
+  </g>
+
+  <rect class="accent" x="64" y="120" width="24" height="24"/>
+
+  <text x="60" y="236" class="sans title">github-repo-publish</text>
+  <text x="64" y="292" class="sans sub">Preview, confirm, then publish. Every push verified.</text>
+
+  <line class="rule" x1="64" y1="336" x2="1216" y2="336" stroke-width="3"/>
+
+  <g class="sans">
+    <text x="64"  y="376" class="label">TYPE</text>
+    <text x="64"  y="412" class="value">Agent Skill</text>
+
+    <text x="314" y="376" class="label">CLIENTS</text>
+    <text x="314" y="412" class="value">Codex · Claude Code · Cursor</text>
+    <text x="314" y="440" class="value">Gemini CLI · OpenCode</text>
+
+    <text x="726" y="376" class="label">REQUIRES</text>
+    <text x="726" y="412" class="mono value">git · gh · python 3.8+</text>
+
+    <text x="1022" y="376" class="label">PLATFORM</text>
+    <text x="1022" y="412" class="value">macOS · Linux</text>
+  </g>
+  <line class="rule" x1="294" y1="356" x2="294" y2="448" stroke-width="1"/>
+  <line class="rule" x1="706" y1="356" x2="706" y2="448" stroke-width="1"/>
+  <line class="rule" x1="1002" y1="356" x2="1002" y2="448" stroke-width="1"/>
+</svg>
