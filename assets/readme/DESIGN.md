@@ -84,7 +84,7 @@ One short demo per README prompt, generated from a storyboard rather than record
 
 - **Illustrative, labelled.** Field names, order and states come from the sources above. Values (`@you`, `owner/repo`, the SHA, the description) are examples. Every card says so in its header, and the README notes it under the first demo.
 - **Sources:** `src/demo.json` (English) and `src/demo.zh-CN.json` (Simplified Chinese). The prompts are copied verbatim from `README.md` and `README.zh-CN.md`. Update a storyboard whenever a prompt changes.
-- **Output:** `demo/<id>{,-zh-CN}-{light,dark}.svg` for the README (43–79KB each), and `demo/gif/<id>{,-zh-CN}.gif` (light, 960px wide, 0.45–0.93MB) for places that don't play SVG animation. A GIF's first frame is the finished card, then it replays the animation once before looping.
+- **Output:** the README uses `demo/gif/<id>{,-zh-CN}-{light,dark}.gif` (960px wide, 10fps, 64 colors, 0.41–0.88MB each), switched by `<picture>`. They loop forever: the prompt types in, the reply appears, and the finished card holds for 3s before replaying. Looping was chosen because these demos read like screen recordings; an SVG that plays once has usually finished before the reader scrolls to it. `demo/<id>{,-zh-CN}-{light,dark}.svg` (43–79KB, plays once, final state is static) are the vector sources and the static fallback. For platforms that only show the first frame, rebuild with `--gif-start final`.
 - **Rebuild:** run readme-stylist `scripts/demo_storyboard.py build assets/readme/src/demo.json --out assets/readme/demo --fonts-dir <latin fonts> --fonts-dir <Noto Sans SC> --gif`, then the same for `demo.zh-CN.json`. GIFs need `rsvg-convert` (or `resvg`) and ImageMagick.
 
 ## Files
