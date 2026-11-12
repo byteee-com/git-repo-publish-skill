@@ -1,6 +1,6 @@
 # README design record
 
-Produced with the `readme-stylist` skill (concept-first workflow). Keep new README assets consistent with this record.
+Produced with the `beauty-readme` skill (concept-first workflow). Keep new README assets consistent with this record.
 
 ## Concept
 
@@ -85,7 +85,7 @@ One short demo per README prompt, generated from a storyboard rather than record
 - **Illustrative, labelled.** Field names, order and states come from the sources above. Values (`@you`, `owner/repo`, the SHA, the description) are examples. Every card says so in its header, and the README notes it under the first demo.
 - **Sources:** `src/demo.json` (English) and `src/demo.zh-CN.json` (Simplified Chinese). The prompts are copied verbatim from `README.md` and `README.zh-CN.md`. Update a storyboard whenever a prompt changes.
 - **Output:** the README uses `demo/gif/<id>{,-zh-CN}-{light,dark}.gif` (960px wide, 10fps, 64 colors, 0.41–0.88MB each), switched by `<picture>`. They loop forever: the prompt types in, the reply appears, and the finished card holds for 3s before replaying. Looping was chosen because these demos read like screen recordings; an SVG that plays once has usually finished before the reader scrolls to it. `demo/<id>{,-zh-CN}-{light,dark}.svg` (43–79KB, plays once, final state is static) are the vector sources and the static fallback. For platforms that only show the first frame, rebuild with `--gif-start final`.
-- **Rebuild:** run readme-stylist `scripts/demo_storyboard.py build assets/readme/src/demo.json --out assets/readme/demo --fonts-dir <latin fonts> --fonts-dir <Noto Sans SC> --gif`, then the same for `demo.zh-CN.json`. GIFs need `rsvg-convert` (or `resvg`) and ImageMagick.
+- **Rebuild:** run beauty-readme `scripts/demo_storyboard.py build assets/readme/src/demo.json --out assets/readme/demo --fonts-dir <latin fonts> --fonts-dir <Noto Sans SC> --gif`, then the same for `demo.zh-CN.json`. GIFs need `rsvg-convert` (or `resvg`) and ImageMagick.
 
 ## Files
 
@@ -95,14 +95,14 @@ One short demo per README prompt, generated from a storyboard rather than record
 | `workflow-light.svg` / `workflow-dark.svg` | 1280 × 600 | "How it works" |
 | `hero-zh-CN-{light,dark}.svg` / `workflow-zh-CN-{light,dark}.svg` | 1280 × 600 | Simplified Chinese README |
 | `src/*.svg` | | Editable sources with live `<text>` |
-| `src/build.py` | | Generator. `FONTS_DIR=<dir with the fonts> python3 build.py <out>`, then run readme-stylist `text_to_path.py` with a font map (`disp`, `head`, `headm`, `mono`, `monob`) |
+| `src/build.py` | | Generator. `FONTS_DIR=<dir with the fonts> python3 build.py <out>`, then run beauty-readme `text_to_path.py` with a font map (`disp`, `head`, `headm`, `mono`, `monob`) |
 | `src/localize_zh.py` | | Reuses the outlined English assets and renders translated labels with Noto Sans SC |
 
 Generate the Chinese artwork with `python3 assets/readme/src/localize_zh.py <font-directory>` from the project root. The script uses FontTools and [Noto Sans SC Regular and Bold](https://github.com/notofonts/noto-cjk/tree/main/Sans/SubsetOTF/SC) under the SIL Open Font License.
 
 ## Review log
 
-Rendered with `rsvg-convert` at 1280 / 830 / 360px and checked against `readme-stylist/references/self-check.md`.
+Rendered with `rsvg-convert` at 1280 / 830 / 360px and checked against `beauty-readme/references/self-check.md`.
 
 | Round | Problem | Change |
 | :-- | :-- | :-- |

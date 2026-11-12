@@ -39,7 +39,7 @@ python3 "$publisher" resume --root "$project_root" --target "$target" \
   --confirm-target "$confirmed_owner_repo"
 ```
 
-`publish` 将计划和 `operations.repository`、`operations.push`、`operations.metadata` 保存到 Git 目录下的 `github-repo-publish`。状态 `requested` 代表已发出或即将发出请求，结果待回读，`verified` 代表已验证，`skipped` 代表计划里没有资料变更。记录不含登录凭据。
+`publish` 将计划和 `operations.repository`、`operations.push`、`operations.metadata` 保存到 Git 目录下的 `github-repo-publish`。状态 `requested` 代表已发出或即将发出请求，结果待回读，`verified` 代表已验证，`skipped` 代表计划里没有资料变更。记录不含登录凭据。Skill 改名为 `git-repo-publish` 后，继续使用这个目录读取和写入恢复记录。
 
 - **建仓已确认。** 用 `inspect` 核对仓库 ID 和可见性，再 `resume`。远端仍为空时重试同一个提交。远端分支已经处于计划中的 SHA 时直接验证并进入资料阶段。
 - **建仓请求没有收到响应。** 先 `inspect`。同名仓库仍不可见时，`resume` 可重试创建。出现同名仓库时核对 ID、归属、可见性和是否为空，得到用户明确同意后使用 `resume --repo-id "$reviewed_repo_id"`。遇到不同仓库 ID、可见性变化或未核对的远端提交，停在检查。

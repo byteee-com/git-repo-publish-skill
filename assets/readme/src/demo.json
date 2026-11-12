@@ -1,5 +1,5 @@
 {
-  "project": "github-repo-publish",
+  "project": "git-repo-publish",
   "suffix": "",
   "label": "ILLUSTRATIVE · EXAMPLE VALUES",
   "demo": "DEMO",
@@ -47,7 +47,7 @@
       "id": "preview",
       "title": "PREVIEW",
       "summary": "The agent replies with the full publish preview and waits for confirmation.",
-      "prompt": "Use github-repo-publish to preview publishing this project. Suggest a description and topics, let me choose the owner and repository name, and wait for my confirmation.",
+      "prompt": "Use git-repo-publish to preview publishing this project. Suggest a description and topics, let me choose the owner and repository name, and wait for my confirmation.",
       "reply": [
         {
           "kind": "grid",
@@ -202,7 +202,7 @@
       "id": "dry-run",
       "title": "DRY RUN",
       "summary": "The agent inspects and shows the preview, then stops without publishing.",
-      "prompt": "Use github-repo-publish to inspect this project and show the publish preview. Do not publish.",
+      "prompt": "Use git-repo-publish to inspect this project and show the publish preview. Do not publish.",
       "reply": [
         {
           "kind": "line",
@@ -263,12 +263,12 @@
       "id": "resume",
       "title": "RESUME",
       "summary": "The agent reads the saved publish record, re-inspects, and resumes the same confirmed target.",
-      "prompt": "Use github-repo-publish to check the last publish of this project and resume it to the same confirmed target.",
+      "prompt": "Use git-repo-publish to check the last publish of this project and resume it to the same confirmed target.",
       "reply": [
         {
           "kind": "line",
           "k": "RECORD",
-          "v": ".git/github-repo-publish"
+          "v": "loaded"
         },
         {
           "kind": "grid",

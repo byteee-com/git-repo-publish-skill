@@ -84,7 +84,7 @@ def hero(mode):
     ticket = f"M24 24 H{P-36} A18 18 0 0 0 {P} 24 H1256 V576 H{P} A18 18 0 0 0 {P-36} 576 H24 Z"
     o = []
     o.append(f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" width="{W}" height="{H}" role="img" aria-labelledby="t d">')
-    o.append('<title id="t">github-repo-publish — a boarding pass for your first publish</title>')
+    o.append('<title id="t">git-repo-publish — a boarding pass for your first publish</title>')
     o.append('<desc id="d">A boarding pass from a local project to owner/repo on GitHub. It lists the preview fields the skill shows before publishing: account, owner, visibility, protocol, branch and full commit SHA. The stub is stamped "awaiting confirmation" at the --confirm-target gate.</desc>')
     o.append(style(t, HERO_MOTION))
     # shadow + ticket
@@ -105,7 +105,7 @@ def hero(mode):
     L = 64
     R = P - 54  # right edge of main body = 900
     # header
-    o.append(T(L, 86, "GITHUB-REPO-PUBLISH", "head", 36, "ink", ls=1.5))
+    o.append(T(L, 86, "GIT-REPO-PUBLISH", "head", 36, "ink", ls=1.5))
     o.append(T(R, 84, "FIRST-PUBLISH PASS", "mono", 22, "muted", "end", ls=2))
     o.append(f'<rect x="{L}" y="104" width="{R-L}" height="3" fill="{t["rule"] if mode=="light" else t["ink"]}"/>')
 

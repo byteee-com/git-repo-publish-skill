@@ -58,7 +58,7 @@ WORKFLOW = {
 ARTWORK = {
     "hero": (
         HERO,
-        "github-repo-publish · 首次发布登机牌",
+        "git-repo-publish · 首次发布登机牌",
         "从本地项目发布到 GitHub。核对登录账号、仓库归属、可见性、协议、分支和完整提交 SHA，再确认发布。",
     ),
     "workflow": (

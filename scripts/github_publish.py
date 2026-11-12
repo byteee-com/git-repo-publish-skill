@@ -332,6 +332,7 @@ def locked_journal(root, target):
     if git_root(root) != root:
         raise Stop("The project directory must be the initialized Git repository root.")
     common = git(root, "rev-parse", "--git-common-dir").stdout.strip()
+    # Preserve the journal and lock paths used before the skill was renamed.
     directory = (root / common).resolve() / "github-repo-publish"
     directory.mkdir(mode=0o700, exist_ok=True)
     key = hashlib.sha256(target.casefold().encode()).hexdigest()

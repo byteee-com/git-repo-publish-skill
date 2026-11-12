@@ -16,7 +16,7 @@
 
 ## 项目简介
 
-这是一个可在多个 Agent 客户端使用的 [Agent Skill](https://agentskills.io/specification)，用于把本地 Git 项目首次发布到 GitHub。它会预览目标仓库和要发布的文件，拟好简介和 Topics 供你筛选，并在推送后核对远端提交。发布中断后可以恢复。
+`git-repo-publish` 是一个可在多个 Agent 客户端使用的 [Agent Skill](https://agentskills.io/specification)，用于首次发布本地 Git 项目。它会预览目标仓库和要发布的文件，拟好简介和 Topics 供你筛选，并在推送后核对远端提交。发布中断后可以恢复。
 
 | 项目 | 说明 |
 | --- | --- |
@@ -24,6 +24,13 @@
 | 目标仓库 | 新建仓库，或你明确指定的空仓库。支持个人或组织、公开或私有 |
 | 范围 | 面向首次发布。已有分支或标签的仓库，以及后续日常同步，请使用常规 Git 流程 |
 | 运行环境 | macOS 或 Linux，使用 Git、GitHub CLI（`gh`）和 Python 3.8+ |
+
+### 托管平台
+
+- ✅ GitHub（github.com，已支持）
+- GitLab（后续支持）
+- Gitee（后续支持）
+- 云效 Codeup（后续支持）
 
 ## 工作流程
 
@@ -38,15 +45,15 @@
 
 ## 安装
 
-将完整的 skill 文件夹复制到客户端会读取的目录，保留 `SKILL.md`、`scripts/` 和 `references/`。复制后的文件夹命名为 `github-repo-publish`。
+将完整的 skill 文件夹复制到客户端会读取的目录，保留 `SKILL.md`、`scripts/` 和 `references/`。复制后的文件夹命名为 `git-repo-publish`。
 
 | 客户端 | 项目中的安装目录 | 如何调用 |
 | --- | --- | --- |
-| [Codex](https://learn.chatgpt.com/docs/build-skills#where-codex-loads-local-skills) | `.agents/skills/github-repo-publish/` | 在聊天中调用 `$github-repo-publish` |
-| [Claude Code](https://code.claude.com/docs/en/skills#choose-where-skills-load) | `.claude/skills/github-repo-publish/` | 输入 `/github-repo-publish` |
-| [Cursor](https://cursor.com/docs/skills#skill-directories) | `.agents/skills/github-repo-publish/` | 在 Agent 聊天中输入 `/` 并选择该 skill |
-| [Gemini CLI](https://geminicli.com/docs/cli/skills/) | `.agents/skills/github-repo-publish/` | 用 `/skills list` 确认已加载，再按名称调用 |
-| [OpenCode](https://opencode.ai/docs/skills/#discovery) | `.agents/skills/github-repo-publish/` | 让 OpenCode 按名称加载并使用该 skill |
+| [Codex](https://learn.chatgpt.com/docs/build-skills#where-codex-loads-local-skills) | `.agents/skills/git-repo-publish/` | 在聊天中调用 `$git-repo-publish` |
+| [Claude Code](https://code.claude.com/docs/en/skills#choose-where-skills-load) | `.claude/skills/git-repo-publish/` | 输入 `/git-repo-publish` |
+| [Cursor](https://cursor.com/docs/skills#skill-directories) | `.agents/skills/git-repo-publish/` | 在 Agent 聊天中输入 `/` 并选择该 skill |
+| [Gemini CLI](https://geminicli.com/docs/cli/skills/) | `.agents/skills/git-repo-publish/` | 用 `/skills list` 确认已加载，再按名称调用 |
+| [OpenCode](https://opencode.ai/docs/skills/#discovery) | `.agents/skills/git-repo-publish/` | 让 OpenCode 按名称加载并使用该 skill |
 
 > [!TIP]
 > 支持 `.agents/skills/` 的客户端可共用项目里的同一份 skill。其他兼容 Agent Skills 规范的客户端可以按各自的文档安装。`agents/openai.yaml` 为 Codex 提供可选的界面配置。
@@ -56,7 +63,7 @@
 在 Agent 能访问项目文件，且 GitHub CLI 已登录的环境中，先请它生成发布预览。
 
 ```text
-用 github-repo-publish 预览当前项目的发布方案。请拟好简介和 Topics，让我选仓库归属和名称，等我确认后再发布。
+用 git-repo-publish 预览当前项目的发布方案。请拟好简介和 Topics，让我选仓库归属和名称，等我确认后再发布。
 ```
 
 <picture>
@@ -83,7 +90,7 @@
 只检查和预览
 
 ```text
-用 github-repo-publish 检查这个项目并展示发布预览，到预览为止。
+用 git-repo-publish 检查这个项目并展示发布预览，到预览为止。
 ```
 
 <picture>
@@ -94,7 +101,7 @@
 恢复中断的发布
 
 ```text
-用 github-repo-publish 检查这个项目上一次发布的状态，并恢复到原来确认过的目标。
+用 git-repo-publish 检查这个项目上一次发布的状态，并恢复到原来确认过的目标。
 ```
 
 <picture>

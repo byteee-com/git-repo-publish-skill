@@ -1,5 +1,5 @@
 {
-  "project": "github-repo-publish",
+  "project": "git-repo-publish",
   "suffix": "-zh-CN",
   "lang": "zh-CN",
   "label": "示意 · 示例数据",
@@ -48,7 +48,7 @@
       "id": "preview",
       "title": "预览",
       "summary": "Agent 给出完整发布预览，并等待确认。",
-      "prompt": "用 github-repo-publish 预览当前项目的发布方案。请拟好简介和 Topics，让我选仓库归属和名称，等我确认后再发布。",
+      "prompt": "用 git-repo-publish 预览当前项目的发布方案。请拟好简介和 Topics，让我选仓库归属和名称，等我确认后再发布。",
       "reply": [
         {
           "kind": "grid",
@@ -203,7 +203,7 @@
       "id": "dry-run",
       "title": "只预览",
       "summary": "Agent 只检查并展示预览，到预览为止，不发布。",
-      "prompt": "用 github-repo-publish 检查这个项目并展示发布预览，到预览为止。",
+      "prompt": "用 git-repo-publish 检查这个项目并展示发布预览，到预览为止。",
       "reply": [
         {
           "kind": "line",
@@ -264,12 +264,12 @@
       "id": "resume",
       "title": "恢复发布",
       "summary": "Agent 读取上次的发布记录，重新检查后恢复到原来确认过的目标。",
-      "prompt": "用 github-repo-publish 检查这个项目上一次发布的状态，并恢复到原来确认过的目标。",
+      "prompt": "用 git-repo-publish 检查这个项目上一次发布的状态，并恢复到原来确认过的目标。",
       "reply": [
         {
           "kind": "line",
           "k": "发布记录",
-          "v": ".git/github-repo-publish"
+          "v": "已读取"
         },
         {
           "kind": "grid",

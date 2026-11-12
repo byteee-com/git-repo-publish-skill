@@ -23,14 +23,21 @@
 
 ## Overview
 
-A portable [Agent Skill](https://agentskills.io/specification) for first-time publishing of local Git projects to GitHub. It previews the target and files to publish, drafts a description and topics for review, and verifies the pushed commit. Interrupted publishes can be resumed.
+`git-repo-publish` is a portable [Agent Skill](https://agentskills.io/specification) for first-time publishing of local Git projects. It previews the target and files to publish, drafts a description and topics for review, and verifies the pushed commit. Interrupted publishes can be resumed.
 
 | | |
 | :-- | :-- |
-| **Use it for** | Publishing a local project to github.com for the first time, or finishing an interrupted first publish |
+| **Use it for** | Publishing a local Git project for the first time, or finishing an interrupted first publish |
 | **Targets** | A new repository, or an empty one you name explicitly — personal or organization, private or public |
 | **Not for** | Pushing to repositories that already have branches or tags, or ongoing sync after the first publish |
 | **Runs on** | macOS or Linux, with Git, GitHub CLI (`gh`), and Python 3.8+ |
+
+### Hosting providers
+
+- ✅ GitHub (github.com) — supported
+- GitLab — planned
+- Gitee — planned
+- Alibaba Cloud Codeup — planned
 
 ## How it works
 
@@ -45,15 +52,15 @@ A portable [Agent Skill](https://agentskills.io/specification) for first-time pu
 
 ## Install
 
-Copy the entire skill folder, including `SKILL.md`, `scripts/`, and `references/`, to a skills directory your agent reads. Name the copied folder `github-repo-publish`.
+Copy the entire skill folder, including `SKILL.md`, `scripts/`, and `references/`, to a skills directory your agent reads. Name the copied folder `git-repo-publish`.
 
 | Client | Project skill directory | How to start |
 | --- | --- | --- |
-| [Codex](https://learn.chatgpt.com/docs/build-skills#where-codex-loads-local-skills) | `.agents/skills/github-repo-publish/` | Invoke `$github-repo-publish` in chat. |
-| [Claude Code](https://code.claude.com/docs/en/skills#choose-where-skills-load) | `.claude/skills/github-repo-publish/` | Run `/github-repo-publish`. |
-| [Cursor](https://cursor.com/docs/skills#skill-directories) | `.agents/skills/github-repo-publish/` | Type `/` in Agent chat and select the skill. |
-| [Gemini CLI](https://geminicli.com/docs/cli/skills/) | `.agents/skills/github-repo-publish/` | Check `/skills list` and ask Gemini to use the skill by name. |
-| [OpenCode](https://opencode.ai/docs/skills/#discovery) | `.agents/skills/github-repo-publish/` | Ask OpenCode to load and use the skill by name. |
+| [Codex](https://learn.chatgpt.com/docs/build-skills#where-codex-loads-local-skills) | `.agents/skills/git-repo-publish/` | Invoke `$git-repo-publish` in chat. |
+| [Claude Code](https://code.claude.com/docs/en/skills#choose-where-skills-load) | `.claude/skills/git-repo-publish/` | Run `/git-repo-publish`. |
+| [Cursor](https://cursor.com/docs/skills#skill-directories) | `.agents/skills/git-repo-publish/` | Type `/` in Agent chat and select the skill. |
+| [Gemini CLI](https://geminicli.com/docs/cli/skills/) | `.agents/skills/git-repo-publish/` | Check `/skills list` and ask Gemini to use the skill by name. |
+| [OpenCode](https://opencode.ai/docs/skills/#discovery) | `.agents/skills/git-repo-publish/` | Ask OpenCode to load and use the skill by name. |
 
 > [!TIP]
 > The four clients that read `.agents/skills/` can share a single copy in the project. Other clients that support the Agent Skills format can load the same folder from their documented skills directory. `agents/openai.yaml` supplies optional interface metadata for Codex.
@@ -63,7 +70,7 @@ Copy the entire skill folder, including `SKILL.md`, `scripts/`, and `references/
 Run the agent where it can access the source project and an authenticated GitHub CLI session. Ask it to prepare a preview before it publishes:
 
 ```text
-Use github-repo-publish to preview publishing this project. Suggest a description and topics, let me choose the owner and repository name, and wait for my confirmation.
+Use git-repo-publish to preview publishing this project. Suggest a description and topics, let me choose the owner and repository name, and wait for my confirmation.
 ```
 
 <picture>
@@ -90,7 +97,7 @@ Confirm publish to owner/repo
 Dry run only — inspect and preview, then stop:
 
 ```text
-Use github-repo-publish to inspect this project and show the publish preview. Do not publish.
+Use git-repo-publish to inspect this project and show the publish preview. Do not publish.
 ```
 
 <picture>
@@ -101,7 +108,7 @@ Use github-repo-publish to inspect this project and show the publish preview. Do
 Resume an interrupted publish:
 
 ```text
-Use github-repo-publish to check the last publish of this project and resume it to the same confirmed target.
+Use git-repo-publish to check the last publish of this project and resume it to the same confirmed target.
 ```
 
 <picture>
