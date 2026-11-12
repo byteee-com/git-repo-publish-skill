@@ -1,3 +1,5 @@
+**English** · [简体中文](README.zh-CN.md)
+
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="assets/readme/hero-dark.svg">
   <img alt="A boarding pass for a first publish: from ~/Code/project to owner/repo, listing account, owner, visibility, protocol, branch and full commit SHA, with the stub stamped Awaiting confirmation at the --confirm-target gate" src="assets/readme/hero-light.svg" width="100%">
