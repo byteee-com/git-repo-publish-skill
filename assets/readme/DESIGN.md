@@ -59,8 +59,12 @@ All text is converted to paths, so it renders identically everywhere. Fonts are 
 | :-- | :-- | :-- |
 | `hero-light.svg` / `hero-dark.svg` | 1280 × 600 | README top, switched with `<picture>` |
 | `workflow-light.svg` / `workflow-dark.svg` | 1280 × 600 | "How it works" |
+| `hero-zh-CN-{light,dark}.svg` / `workflow-zh-CN-{light,dark}.svg` | 1280 × 600 | Simplified Chinese README |
 | `src/*.svg` | | Editable sources with live `<text>` |
 | `src/build.py` | | Generator. `FONTS_DIR=<dir with the fonts> python3 build.py <out>`, then run readme-stylist `text_to_path.py` with a font map (`disp`, `head`, `headm`, `mono`, `monob`) |
+| `src/localize_zh.py` | | Reuses the outlined English assets and renders translated labels with Noto Sans SC |
+
+Generate the Chinese artwork with `python3 assets/readme/src/localize_zh.py <font-directory>` from the project root. The script uses FontTools and [Noto Sans SC Regular and Bold](https://github.com/notofonts/noto-cjk/tree/main/Sans/SubsetOTF/SC) under the SIL Open Font License.
 
 ## Review log
 

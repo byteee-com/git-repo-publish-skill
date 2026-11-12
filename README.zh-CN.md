@@ -1,8 +1,8 @@
 [English](README.md) · **简体中文**
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="assets/readme/hero-dark.svg">
-  <img alt="首次发布登机牌，从本地项目到 GitHub 仓库。核对账号、归属、可见性、协议、分支和完整提交 SHA 后，确认发布。" src="assets/readme/hero-light.svg" width="100%">
+  <source media="(prefers-color-scheme: dark)" srcset="assets/readme/hero-zh-CN-dark.svg">
+  <img alt="首次发布登机牌，从本地项目到 GitHub 仓库。核对账号、归属、可见性、协议、分支和完整提交 SHA 后，确认发布。" src="assets/readme/hero-zh-CN-light.svg" width="100%">
 </picture>
 
 [![许可证：MIT](https://img.shields.io/badge/License-MIT-d4430f?style=flat-square)](LICENSE)
@@ -28,8 +28,8 @@
 ## 工作流程
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="assets/readme/workflow-dark.svg">
-  <img alt="发布流程为检查、预览、确认、推送和核验。中断后先重新检查同一个已确认的目标，再恢复发布。" src="assets/readme/workflow-light.svg" width="100%">
+  <source media="(prefers-color-scheme: dark)" srcset="assets/readme/workflow-zh-CN-dark.svg">
+  <img alt="发布流程为检查、预览、确认、推送和核验。中断后先重新检查同一个已确认的目标，再恢复发布。" src="assets/readme/workflow-zh-CN-light.svg" width="100%">
 </picture>
 
 - **先预览。** Agent 会展示项目路径、登录账号、仓库归属与名称、可见性、推送协议、分支、完整提交 SHA，以及简介和 Topics 草稿。它也会检查拟发布内容中的凭据、大文件、LFS、子模块及推送会触发的工作流。
