@@ -1,14 +1,20 @@
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="assets/readme/hero-dark.svg">
-  <img alt="github-repo-publish: preview, confirm, and verify a project's first publish to GitHub" src="assets/readme/hero-light.svg" width="100%">
+  <img alt="A boarding pass for a first publish: from ~/Code/project to owner/repo, listing account, owner, visibility, protocol, branch and full commit SHA, with the stub stamped Awaiting confirmation at the --confirm-target gate" src="assets/readme/hero-light.svg" width="100%">
 </picture>
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-d4430f?style=flat-square)](LICENSE)
+[![Agent Skills compatible](https://img.shields.io/badge/Agent%20Skills-Compatible-57534e?style=flat-square)](#install)
+[![Platforms: macOS and Linux](https://img.shields.io/badge/Platforms-macOS%20%7C%20Linux-57534e?style=flat-square)](#requirements)
+[![Push protocols: SSH and HTTPS](https://img.shields.io/badge/Push-SSH%20%7C%20HTTPS-57534e?style=flat-square)](references/github.md)
 
 <p>
   <a href="#install">Install</a> ·
   <a href="#use">Use</a> ·
   <a href="#how-it-works">How it works</a> ·
   <a href="#requirements">Requirements</a> ·
-  <a href="references/github.md">Operations guide</a>
+  <a href="references/github.md">Operations guide</a> ·
+  <a href="#license">License</a>
 </p>
 
 ---
@@ -28,7 +34,7 @@ A portable [Agent Skill](https://agentskills.io/specification) for first-time pu
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="assets/readme/workflow-dark.svg">
-  <img alt="Publishing flow: inspect, preview, confirm, publish, verify. Interrupted runs are re-inspected and resumed against the same confirmed target." src="assets/readme/workflow-light.svg" width="100%">
+  <img alt="Publishing route drawn as a git branch: inspect and preview on your machine, a --confirm-target gate, then publish and verify on GitHub. If a publish is interrupted, a branch resumes against the same confirmed target and merges back into verify." src="assets/readme/workflow-light.svg" width="100%">
 </picture>
 
 - **Preview before anything leaves your machine.** The agent shows the platform, project path, branch and full SHA, account, owner, repository name, visibility, protocol, and the drafted description and topics — plus what it found when checking for credentials, large files, LFS, submodules, and push-triggered workflows.
@@ -93,3 +99,7 @@ The skill uses the client's native question interface when available. For exampl
 | **Push protocol** | HTTPS by default, or SSH — including an existing local SSH alias for the chosen account |
 
 It uses the GitHub account you select, with SSH or HTTPS for the push. See the [GitHub operations guide](references/github.md) for authentication, command details, [resuming an interrupted publish](references/github.md#中断恢复), and how to [record trial publishes](references/github.md#三次真实发布的记录方法).
+
+## License
+
+Released under the [MIT License](LICENSE).

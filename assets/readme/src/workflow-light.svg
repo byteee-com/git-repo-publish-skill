@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 600" width="1280" height="600" role="img" aria-labelledby="t d">
+<title id="t">Publishing route: inspect, preview, confirm gate, publish, verify, with a resume branch</title>
+<desc id="d">A git branch line. On your machine: inspect (accounts, owners, inspect) and preview. A gate marks --confirm-target owner/repo; nothing crosses it without confirmation. On GitHub: publish creates the target branch, verify reads the repository and SHA back. If a publish is interrupted, a branch drops to resume against the same confirmed target and merges back into verify.</desc>
+<style>
+.ink{fill:#1B1A17} .muted{fill:#6B6457} .acc{fill:#D4430F} .paper{fill:#F2ECDF}
+</style>
+<rect x="24" y="24" width="1232" height="552" transform="translate(8 8)" fill="#1B1A17"/>
+<rect x="24" y="24" width="1232" height="552" fill="#F2ECDF" stroke="#1B1A17" stroke-width="2"/>
+<rect x="640" y="25" width="615" height="550" fill="#E7DFCE"/>
+<text class="head ink" x="64.0" y="82.0" font-size="30" letter-spacing="2">ON YOUR MACHINE</text>
+<text class="mono muted" x="64.0" y="114.0" font-size="22">read-only until the gate</text>
+<text class="head ink" x="684.0" y="82.0" font-size="30" letter-spacing="2">ON GITHUB</text>
+<text class="mono muted" x="684.0" y="114.0" font-size="22">after you confirm</text>
+<line x1="64" y1="300" x2="600" y2="300" stroke="#1B1A17" stroke-width="5"/>
+<line x1="680" y1="300" x2="1212" y2="300" stroke="#1B1A17" stroke-width="5"/>
+<path d="M1206 286 L1228 300 L1206 314" fill="none" stroke="#1B1A17" stroke-width="5"/>
+<line x1="600" y1="300" x2="680" y2="300" stroke="#D4430F" stroke-width="5" stroke-dasharray="6 6"/>
+<circle cx="170" cy="300" r="17" fill="#F2ECDF" stroke="#1B1A17" stroke-width="5"/>
+<text class="head ink" x="170.0" y="200.0" font-size="38" text-anchor="middle" letter-spacing="1.5">INSPECT</text>
+<text class="mono muted" x="170.0" y="234.0" font-size="22" text-anchor="middle">accounts</text>
+<text class="mono muted" x="170.0" y="262.0" font-size="22" text-anchor="middle">owners · inspect</text>
+<circle cx="420" cy="300" r="17" fill="#F2ECDF" stroke="#1B1A17" stroke-width="5"/>
+<text class="head ink" x="420.0" y="200.0" font-size="38" text-anchor="middle" letter-spacing="1.5">PREVIEW</text>
+<text class="mono muted" x="420.0" y="234.0" font-size="22" text-anchor="middle">branch · full SHA</text>
+<text class="mono muted" x="420.0" y="262.0" font-size="22" text-anchor="middle">owner · visibility</text>
+<circle cx="820" cy="300" r="17" fill="#E7DFCE" stroke="#1B1A17" stroke-width="5"/>
+<text class="head ink" x="820.0" y="200.0" font-size="38" text-anchor="middle" letter-spacing="1.5">PUBLISH</text>
+<text class="mono muted" x="820.0" y="234.0" font-size="22" text-anchor="middle">creates the</text>
+<text class="mono muted" x="820.0" y="262.0" font-size="22" text-anchor="middle">target branch</text>
+<circle cx="1110" cy="300" r="17" fill="#1B1A17" stroke="#1B1A17" stroke-width="5"/>
+<text class="head ink" x="1110.0" y="200.0" font-size="38" text-anchor="middle" letter-spacing="1.5">VERIFY</text>
+<text class="mono muted" x="1110.0" y="234.0" font-size="22" text-anchor="middle">reads repo +</text>
+<text class="mono muted" x="1110.0" y="262.0" font-size="22" text-anchor="middle">SHA back</text>
+<rect x="606" y="150" width="10" height="250" fill="#D4430F"/>
+<rect x="664" y="150" width="10" height="250" fill="#D4430F"/>
+<rect x="606" y="150" width="68" height="10" fill="#D4430F"/>
+<text class="head acc" x="640.0" y="450.0" font-size="38" text-anchor="middle" letter-spacing="3">CONFIRM</text>
+<text class="monob acc" x="640.0" y="484.0" font-size="22" text-anchor="middle">--confirm-target</text>
+<text class="monob acc" x="640.0" y="514.0" font-size="22" text-anchor="middle">owner/repo</text>
+<path d="M820 317 C820 400 830 450 870 450 L966 450" fill="none" stroke="#1B1A17" stroke-width="4" stroke-dasharray="10 8"/>
+<path d="M1014 450 L1060 450 C1100 450 1110 400 1110 317" fill="none" stroke="#1B1A17" stroke-width="4"/>
+<rect x="973" y="433" width="34" height="34" transform="rotate(45 990 450)" fill="#E7DFCE" stroke="#1B1A17" stroke-width="4"/>
+<text class="mono muted" x="840.0" y="374.0" font-size="22">if interrupted</text>
+<text class="head ink" x="990.0" y="510.0" font-size="32" text-anchor="middle" letter-spacing="1.5">RESUME</text>
+<text class="mono muted" x="990.0" y="540.0" font-size="22" text-anchor="middle">same confirmed target</text>
+</svg>

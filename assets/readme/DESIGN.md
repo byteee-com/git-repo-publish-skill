@@ -1,39 +1,79 @@
 # README design record
 
-Produced with the `readme-stylist` skill. Keep new README assets consistent with this record.
+Produced with the `readme-stylist` skill (concept-first workflow). Keep new README assets consistent with this record.
 
-## Direction
+## Concept
 
-- **Skeleton:** document (spec-sheet layout, native Markdown first)
-- **Style:** swiss-grid — left-aligned, no rounded corners, gradients, or shadows; one accent color
-- **Weight:** L2 — hero plus one workflow diagram; everything else is Markdown
-- **Why:** the skill is used through conversation, not a command worth showing in a terminal hero. Its value is a verifiable process (preview → explicit confirm → verify / resume), which reads best as a grid and a flow.
+**A first publish is a boarding pass.** Your project travels from a local path to `owner/repo`; it is checked at a gate and only boards after you confirm.
+
+Signature details:
+
+- **Torn stub** with a perforation: the part that is held back until you confirm
+- **"Awaiting confirmation" stamp** crossing the stub: the `--confirm-target` gate
+- **Route line** `LOCAL ─○─○─‖ ‖- - -> GITHUB`: solid commits up to the gate, dashed after it (not yet travelled)
+
+Rejected candidates:
+
+| Candidate | Why rejected |
+| :-- | :-- |
+| Shipping manifest / customs form | Same evidence fit, but harder to recognise in 3 seconds at README width |
+| Terminal session showing `inspect` output | The skill is driven through chat, not a single command, so a terminal would misrepresent how it's used |
+
+## Evidence
+
+The hero is a re-typeset version of the skill's real publish preview. Field names and order come from `SKILL.md` ("准备并预览": platform, path, branch and full SHA, account, owner, repository, visibility, protocol). Values are obvious placeholders: `~/Code/project`, `@you`, `owner/repo`, and an example 40-character SHA. They are not a real repository.
+
+The workflow nodes use real subcommands and stages: `accounts`, `owners`, `inspect`, preview, `--confirm-target`, publish, read-back verify, `resume` (from `SKILL.md` and `references/github.md`).
+
+## Tension
+
+- Extreme scale: 160px `LOCAL` / `GITHUB` against 22px field labels (≈ 7:1)
+- A single accent, used only on the gate and the stamp
+- The stamp is rotated −9° and is the only off-grid element
 
 ## Tokens
 
-| Token | Light | Dark |
+| Token | Light: paper ticket | Dark: night departure board |
 | :-- | :-- | :-- |
-| Background | `#FFFFFF` | `#0D1117` |
-| Foreground / rules | `#111111` | `#F0F3F6` |
-| Muted text | `#5C5C5C` | `#9198A1` |
-| Accent | `#1F6FEB` | `#4493F8` (hero mark) / `#1F6FEB` fill with white text (diagram) |
+| Paper | `#F2ECDF` | `#0F1828` |
+| Ink | `#1B1A17` | `#F1EADB` |
+| Muted | `#6B6457` | `#8D9AB0` |
+| Hairlines | `#CFC6B4` | `#24324B` |
+| Accent | `#D4430F` (red rubber stamp) | `#FFB23F` (amber signal, with glow ring) |
+| GitHub-side zone | `#E7DFCE` | `#16223A` |
 
-The accent is GitHub blue, used only twice: the square mark in the hero and the **Confirm** step in the diagram — the step that defines this skill.
+Dark is a separate scene, not an inversion. It adds a dot-matrix texture on the stub, split-flap seams through the big letters, and a glowing stamp. Light uses a hard offset shadow, like a printed card.
 
 ## Type
 
-- Display and labels: `"Helvetica Neue", Helvetica, -apple-system, "Segoe UI", "Noto Sans", Arial, sans-serif`
-- Mono: `ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace`
-- Hero title 96px (letter-spacing −4px), subtitle 30px, labels 15–16px uppercase with +1.6px tracking
-- Text currently uses system font stacks; run `text_to_path.py` from readme-stylist if exact rendering across platforms is needed
+All text is converted to paths, so it renders identically everywhere. Fonts are SIL OFL:
+
+- Display: Bebas Neue (`LOCAL`, `GITHUB`)
+- Headings and stamp: Oswald Bold / Medium
+- Fields and code: JetBrains Mono Regular / Bold
+- Minimum size: 22px on a 1280 canvas, ≈ 14px at GitHub's ~830px column
 
 ## Files
 
 | File | Canvas | Use |
 | :-- | :-- | :-- |
-| `hero-light.svg` / `hero-dark.svg` | 1280 × 480 | README top, switched with `<picture>` |
-| `workflow-light.svg` / `workflow-dark.svg` | 1280 × 400 | "How it works" section |
+| `hero-light.svg` / `hero-dark.svg` | 1280 × 600 | README top, switched with `<picture>` |
+| `workflow-light.svg` / `workflow-dark.svg` | 1280 × 600 | "How it works" |
+| `src/*.svg` | | Editable sources with live `<text>` |
+| `src/build.py` | | Generator. `FONTS_DIR=<dir with the fonts> python3 build.py <out>`, then run readme-stylist `text_to_path.py` with a font map (`disp`, `head`, `headm`, `mono`, `monob`) |
+
+## Review log
+
+Rendered with `rsvg-convert` at 1280 / 830 / 360px and checked against `readme-stylist/references/self-check.md`.
+
+| Round | Problem | Change |
+| :-- | :-- | :-- |
+| 1 | Workflow: step captions sat under the line and collided with the gate label and the resume branch | Moved names and captions above the line; the gate label and resume lane now own the space below |
+| 1 | Hero: gate posts were too thin to read as a gate at 830px | Thicker, taller posts; slightly smaller display type for more route length |
+| 1 | Dark hero: split-flap seam barely visible | Seam thickened from 3 to 5px |
+| 2 | Workflow: PUBLISH crowded the gate post; VERIFY too close to the arrow | Moved PUBLISH right and VERIFY left; recentred the resume lane |
+| 3 | "interrupted" label collided with the resume diamond | Moved it next to the drop-down branch: "if interrupted" |
 
 ## Facts shown in assets
 
-All values come from `SKILL.md`, `README.md`, and `references/github.md`: client list, Git / gh / Python 3.8+, macOS / Linux, and the inspect → preview → confirm → publish → verify / resume flow. No license, star, or usage figures are shown — the repository has no LICENSE file yet.
+The README links to the project license. The illustrations show the publishing workflow.

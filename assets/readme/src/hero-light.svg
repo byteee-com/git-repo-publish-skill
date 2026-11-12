@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 600" width="1280" height="600" role="img" aria-labelledby="t d">
+<title id="t">github-repo-publish — a boarding pass for your first publish</title>
+<desc id="d">A boarding pass from a local project to owner/repo on GitHub. It lists the preview fields the skill shows before publishing: account, owner, visibility, protocol, branch and full commit SHA. The stub is stamped "awaiting confirmation" at the --confirm-target gate.</desc>
+<style>
+.ink{fill:#1B1A17} .muted{fill:#6B6457} .acc{fill:#D4430F} .paper{fill:#F2ECDF}
+</style>
+<path d="M24 24 H918 A18 18 0 0 0 954 24 H1256 V576 H954 A18 18 0 0 0 918 576 H24 Z" transform="translate(8 8)" fill="#1B1A17"/>
+<path d="M24 24 H918 A18 18 0 0 0 954 24 H1256 V576 H954 A18 18 0 0 0 918 576 H24 Z" fill="#F2ECDF" stroke="#1B1A17" stroke-width="2"/>
+<line x1="936" y1="48" x2="936" y2="552" stroke="#6B6457" stroke-width="2" stroke-dasharray="2 9" stroke-linecap="round"/>
+<text class="head ink" x="64.0" y="86.0" font-size="36" letter-spacing="1.5">GITHUB-REPO-PUBLISH</text>
+<text class="mono muted" x="900.0" y="84.0" font-size="22" text-anchor="end" letter-spacing="2">FIRST-PUBLISH PASS</text>
+<rect x="64" y="104" width="836" height="3" fill="#1B1A17"/>
+<text class="disp ink" x="60.0" y="262.0" font-size="160" letter-spacing="2">LOCAL</text>
+<text class="disp ink" x="904.0" y="262.0" font-size="160" text-anchor="end" letter-spacing="2">GITHUB</text>
+<line x1="394" y1="204" x2="441" y2="204" stroke="#1B1A17" stroke-width="4"/>
+<line x1="473" y1="204" x2="514" y2="204" stroke="#1B1A17" stroke-width="4" stroke-dasharray="10 8"/>
+<path d="M506 193 L522 204 L506 215" fill="none" stroke="#1B1A17" stroke-width="4"/>
+<circle cx="400" cy="204" r="9" fill="#F2ECDF" stroke="#1B1A17" stroke-width="4"/>
+<circle cx="425" cy="204" r="9" fill="#F2ECDF" stroke="#1B1A17" stroke-width="4"/>
+<rect x="443" y="170" width="6" height="68" fill="#D4430F"/>
+<rect x="466" y="170" width="6" height="68" fill="#D4430F"/>
+<text class="monob acc" x="456.9" y="266.4" font-size="22" text-anchor="middle" letter-spacing="3">GATE</text>
+<text class="mono muted" x="64.0" y="314.0" font-size="22" letter-spacing="2">FROM</text>
+<text class="monob ink" x="142.0" y="314.0" font-size="24">~/Code/project</text>
+<text class="mono muted" x="742.0" y="314.0" font-size="22" text-anchor="end" letter-spacing="2">TO</text>
+<text class="monob ink" x="900.0" y="314.0" font-size="24" text-anchor="end">owner/repo</text>
+<line x1="64" y1="346" x2="900" y2="346" stroke="#CFC6B4" stroke-width="2"/>
+<text class="mono muted" x="64.0" y="386.0" font-size="22" letter-spacing="2">ACCOUNT</text>
+<text class="monob ink" x="64.0" y="424.0" font-size="30">@you</text>
+<text class="mono muted" x="278.0" y="386.0" font-size="22" letter-spacing="2">OWNER</text>
+<text class="monob ink" x="278.0" y="424.0" font-size="30">owner</text>
+<text class="mono muted" x="492.0" y="386.0" font-size="22" letter-spacing="2">VISIBILITY</text>
+<text class="monob ink" x="492.0" y="424.0" font-size="30">PRIVATE</text>
+<text class="mono muted" x="706.0" y="386.0" font-size="22" letter-spacing="2">PROTOCOL</text>
+<text class="monob ink" x="706.0" y="424.0" font-size="30">HTTPS</text>
+<line x1="260" y1="364" x2="260" y2="434" stroke="#CFC6B4" stroke-width="2"/>
+<line x1="474" y1="364" x2="474" y2="434" stroke="#CFC6B4" stroke-width="2"/>
+<line x1="688" y1="364" x2="688" y2="434" stroke="#CFC6B4" stroke-width="2"/>
+<line x1="64" y1="452" x2="900" y2="452" stroke="#CFC6B4" stroke-width="2"/>
+<text class="mono muted" x="64.0" y="492.0" font-size="22" letter-spacing="2">BRANCH</text>
+<text class="monob ink" x="64.0" y="530.0" font-size="30">main</text>
+<text class="mono muted" x="278.0" y="492.0" font-size="22" letter-spacing="1">COMMIT · FULL SHA, READ BACK AFTER PUSH</text>
+<text class="monob ink" x="278.0" y="528.0" font-size="23">3f9c2e14b7a0d58e6c21f09a4b3d7e8c5a61f2b9</text>
+<line x1="260" y1="470" x2="260" y2="540" stroke="#CFC6B4" stroke-width="2"/>
+<text class="mono muted" x="984.0" y="86.0" font-size="22" letter-spacing="3">GATE</text>
+<text class="monob ink" x="984.0" y="128.0" font-size="24">--confirm-target</text>
+<text class="mono muted" x="984.0" y="186.0" font-size="22" letter-spacing="3">DESTINATION</text>
+<text class="monob ink" x="984.0" y="228.0" font-size="32">owner/repo</text>
+<text class="mono muted" x="984.0" y="276.0" font-size="22" letter-spacing="1">NOTHING IS PUSHED</text>
+<text class="mono muted" x="984.0" y="304.0" font-size="22" letter-spacing="1">BEFORE YOU CONFIRM</text>
+<path d="M984 470v72h3v-72zM990 470v72h4v-72zM997 470v72h2v-72zM1002 470v72h3v-72zM1008 470v72h6v-72zM1017 470v72h2v-72zM1022 470v72h4v-72zM1032 470v72h2v-72zM1037 470v72h2v-72zM1045 470v72h2v-72zM1050 470v72h2v-72zM1055 470v72h6v-72zM1067 470v72h2v-72zM1072 470v72h2v-72zM1077 470v72h3v-72zM1086 470v72h2v-72zM1091 470v72h6v-72zM1101 470v72h6v-72zM1110 470v72h2v-72zM1115 470v72h3v-72zM1121 470v72h6v-72zM1130 470v72h6v-72zM1139 470v72h6v-72zM1148 470v72h4v-72zM1158 470v72h3v-72zM1167 470v72h6v-72zM1179 470v72h3v-72zM1186 470v72h2v-72zM1191 470v72h2v-72zM1196 470v72h6v-72zM1206 470v72h6v-72zM1218 470v72h3v-72z" fill="#1B1A17" opacity="0.9"/>
+<g transform="rotate(-9 1088 392)" opacity="0.92">
+<rect x="938" y="332" width="300" height="120" rx="10" fill="#F2ECDF" fill-opacity="0.55" stroke="#D4430F" stroke-width="5"/>
+<rect x="948" y="342" width="280" height="100" rx="6" fill="none" stroke="#D4430F" stroke-width="2"/>
+<text class="head acc" x="1088.0" y="390.0" font-size="50" text-anchor="middle" letter-spacing="4">AWAITING</text>
+<text class="headm acc" x="1088.0" y="426.0" font-size="26" text-anchor="middle" letter-spacing="5.5">CONFIRMATION</text>
+</g>
+</svg>
