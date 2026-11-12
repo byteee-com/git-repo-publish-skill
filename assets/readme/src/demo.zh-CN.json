@@ -1,0 +1,332 @@
+{
+  "project": "github-repo-publish",
+  "suffix": "-zh-CN",
+  "lang": "zh-CN",
+  "label": "示意 · 示例数据",
+  "demo": "演示",
+  "you": "你",
+  "agent": "AGENT",
+  "label_tracking": 1,
+  "fonts": {
+    "mono": "JBM-Regular.ttf",
+    "monob": "JBM-Bold.ttf",
+    "head": "Oswald-Bold.ttf",
+    "headm": "Oswald-Medium.ttf",
+    "fallback": [
+      "NotoSansSC-Regular.otf"
+    ],
+    "fallback_bold": [
+      "NotoSansSC-Bold.otf"
+    ]
+  },
+  "themes": {
+    "light": {
+      "paper": "#F2ECDF",
+      "ink": "#1B1A17",
+      "muted": "#6B6457",
+      "acc": "#D4430F",
+      "hair": "#CFC6B4",
+      "bubble": "#E7DFCE",
+      "edge": "#1B1A17",
+      "shadow": "#1B1A17",
+      "gif_bg": "#FFFFFF"
+    },
+    "dark": {
+      "paper": "#0F1828",
+      "ink": "#F1EADB",
+      "muted": "#8D9AB0",
+      "acc": "#FFB23F",
+      "hair": "#24324B",
+      "bubble": "#16223A",
+      "edge": "#2C3B57",
+      "shadow": null,
+      "gif_bg": "#0D1117"
+    }
+  },
+  "scenes": [
+    {
+      "id": "preview",
+      "title": "预览",
+      "summary": "Agent 给出完整发布预览，并等待确认。",
+      "prompt": "用 github-repo-publish 预览当前项目的发布方案。请拟好简介和 Topics，让我选仓库归属和名称，等我确认后再发布。",
+      "reply": [
+        {
+          "kind": "grid",
+          "cols": 4,
+          "cells": [
+            [
+              "平台",
+              "github.com"
+            ],
+            [
+              "登录账号",
+              "@you"
+            ],
+            [
+              "仓库归属",
+              "owner"
+            ],
+            [
+              "仓库名",
+              "repo"
+            ],
+            [
+              "目标",
+              "新建仓库"
+            ],
+            [
+              "可见性",
+              "私有"
+            ],
+            [
+              "协议",
+              "HTTPS"
+            ],
+            [
+              "分支",
+              "main"
+            ]
+          ]
+        },
+        {
+          "kind": "rule"
+        },
+        {
+          "kind": "line",
+          "k": "项目路径",
+          "v": "~/Code/project"
+        },
+        {
+          "kind": "line",
+          "k": "提交",
+          "v": "3f9c2e14b7a0d58e6c21f09a4b3d7e8c5a61f2b9",
+          "bold": true
+        },
+        {
+          "kind": "line",
+          "k": "简介",
+          "v": "把本地 Git 项目首次发布到 GitHub，先预览再发布"
+        },
+        {
+          "kind": "line",
+          "k": "Topics",
+          "v": "git · github · cli"
+        },
+        {
+          "kind": "line",
+          "k": "Website",
+          "v": "留空",
+          "tone": "muted"
+        }
+      ],
+      "footer": {
+        "k": "下一步",
+        "v": "确认发布到 owner/repo",
+        "command": true,
+        "stamp": [
+          "等待",
+          "发布确认"
+        ]
+      }
+    },
+    {
+      "id": "confirm",
+      "title": "确认发布",
+      "summary": "确认后 Agent 执行发布，并报告从 GitHub 读回的结果。",
+      "prompt": "确认发布到 owner/repo",
+      "reply": [
+        {
+          "kind": "line",
+          "k": "确认",
+          "v": "--confirm-target owner/repo 与预览一致",
+          "tone": "acc",
+          "bold": true
+        },
+        {
+          "kind": "line",
+          "k": "推送",
+          "v": "只创建了目标分支 main"
+        },
+        {
+          "kind": "rule"
+        },
+        {
+          "kind": "line",
+          "k": "仓库",
+          "v": "https://github.com/owner/repo",
+          "bold": true
+        },
+        {
+          "kind": "grid",
+          "cols": 4,
+          "cells": [
+            [
+              "仓库归属",
+              "owner"
+            ],
+            [
+              "可见性",
+              "私有"
+            ],
+            [
+              "分支",
+              "main"
+            ],
+            [
+              "资料",
+              "已写入"
+            ]
+          ]
+        },
+        {
+          "kind": "line",
+          "k": "提交",
+          "v": "3f9c2e14b7a0d58e6c21f09a4b3d7e8c5a61f2b9",
+          "bold": true
+        },
+        {
+          "kind": "line",
+          "k": "回读",
+          "v": "GitHub 上的 main 分支就是这个提交"
+        }
+      ],
+      "footer": {
+        "k": "状态",
+        "v": "已发布并核验",
+        "stamp": [
+          "已发布",
+          "已回读核验"
+        ]
+      }
+    },
+    {
+      "id": "dry-run",
+      "title": "只预览",
+      "summary": "Agent 只检查并展示预览，到预览为止，不发布。",
+      "prompt": "用 github-repo-publish 检查这个项目并展示发布预览，到预览为止。",
+      "reply": [
+        {
+          "kind": "line",
+          "k": "目标仓库",
+          "v": "missing_or_hidden：未找到或无权查看",
+          "bold": true
+        },
+        {
+          "kind": "grid",
+          "cols": 4,
+          "cells": [
+            [
+              "登录账号",
+              "@you"
+            ],
+            [
+              "仓库归属",
+              "owner"
+            ],
+            [
+              "可见性",
+              "私有"
+            ],
+            [
+              "分支",
+              "main"
+            ]
+          ]
+        },
+        {
+          "kind": "line",
+          "k": "提交",
+          "v": "3f9c2e14b7a0d58e6c21f09a4b3d7e8c5a61f2b9",
+          "bold": true
+        },
+        {
+          "kind": "line",
+          "k": "已检查",
+          "v": "凭据 · 环境文件 · 大文件 · LFS · 子模块 · push 触发的工作流"
+        },
+        {
+          "kind": "line",
+          "k": "结果",
+          "v": "发布前没有需要处理的内容",
+          "tone": "muted"
+        }
+      ],
+      "footer": {
+        "k": "已停止",
+        "v": "只做了预览，没有推送任何内容",
+        "stamp": [
+          "只预览",
+          "未推送"
+        ]
+      }
+    },
+    {
+      "id": "resume",
+      "title": "恢复发布",
+      "summary": "Agent 读取上次的发布记录，重新检查后恢复到原来确认过的目标。",
+      "prompt": "用 github-repo-publish 检查这个项目上一次发布的状态，并恢复到原来确认过的目标。",
+      "reply": [
+        {
+          "kind": "line",
+          "k": "发布记录",
+          "v": ".git/github-repo-publish"
+        },
+        {
+          "kind": "grid",
+          "cols": 3,
+          "cells": [
+            [
+              "建仓",
+              "verified"
+            ],
+            [
+              "推送",
+              "requested"
+            ],
+            [
+              "资料",
+              "requested"
+            ]
+          ]
+        },
+        {
+          "kind": "line",
+          "k": "检查",
+          "v": "仓库 ID 和可见性一致 · 远端仍为空"
+        },
+        {
+          "kind": "line",
+          "k": "恢复",
+          "v": "向 owner/repo 重试同一个提交",
+          "bold": true
+        },
+        {
+          "kind": "grid",
+          "cols": 3,
+          "cells": [
+            [
+              "建仓",
+              "verified"
+            ],
+            [
+              "推送",
+              "verified"
+            ],
+            [
+              "资料",
+              "verified"
+            ]
+          ]
+        }
+      ],
+      "footer": {
+        "k": "目标",
+        "v": "owner/repo，沿用已确认的目标",
+        "stamp": [
+          "已恢复",
+          "原目标"
+        ]
+      }
+    }
+  ]
+}

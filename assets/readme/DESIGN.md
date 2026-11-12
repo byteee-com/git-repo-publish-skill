@@ -53,6 +53,40 @@ All text is converted to paths, so it renders identically everywhere. Fonts are 
 - Fields and code: JetBrains Mono Regular / Bold
 - Minimum size: 22px on a 1280 canvas, ≈ 14px at GitHub's ~830px column
 
+## Motion
+
+Only the hero moves, and only once (about 1.8s). The motion acts out the one state change in the concept: the route reaches the gate, then the stub is stamped.
+
+| Time | Element | Motion |
+| :-- | :-- | :-- |
+| 0–0.8s | Solid route from `LOCAL` to the gate, commit dots | Route draws left to right; dots fade in as it passes |
+| 0.8–1.25s | Gate posts and `GATE` label | Light up with one short flicker |
+| 1.25–1.75s | `AWAITING CONFIRMATION` stamp | Presses down from 1.5× with a small bounce, then rests |
+
+Rules:
+
+- The resting state is the static design. Clients that ignore SVG animation (npm, social previews, some renderers) show the finished pass.
+- `prefers-reduced-motion: reduce` turns every animation off, which shows the final frame immediately.
+- Only `transform` and `opacity` animate. No loop. The CSS adds about 1KB per file.
+- The workflow diagram stays static. It is read, not watched.
+- Classes live on wrapper groups (`mv-route`, `mv-node`, `mv-gate`, `mv-stamp`), so they survive text-to-path and `localize_zh.py`.
+
+## Prompt demos
+
+One short demo per README prompt, generated from a storyboard rather than recorded. Each demo is a chat card: the prompt types out, then the agent's reply appears line by line and ends on a stamp. Each plays once (4–7s), and the resting state is the final frame.
+
+| Demo | Prompt (verbatim from README) | Reply fields — source |
+| :-- | :-- | :-- |
+| `preview` | Preview publishing this project | Publish preview fields and next instruction — `SKILL.md` line 28 |
+| `confirm` | `Confirm publish to owner/repo` | `--confirm-target` check, branch-only push, report: link, owner, visibility, branch, verified SHA, metadata — `SKILL.md` lines 33–35, `references/github.md` "发布与验证" |
+| `dry-run` | Inspect and preview, do not publish | `inspect` destination states, pre-push checks — `SKILL.md` lines 12, 27; `references/github.md` line 16 |
+| `resume` | Resume the last publish | Saved record, `operations.*` states, inspect then resume — `references/github.md` "中断恢复" |
+
+- **Illustrative, labelled.** Field names, order and states come from the sources above. Values (`@you`, `owner/repo`, the SHA, the description) are examples. Every card says so in its header, and the README notes it under the first demo.
+- **Sources:** `src/demo.json` (English) and `src/demo.zh-CN.json` (Simplified Chinese). The prompts are copied verbatim from `README.md` and `README.zh-CN.md`. Update a storyboard whenever a prompt changes.
+- **Output:** `demo/<id>{,-zh-CN}-{light,dark}.svg` for the README (43–79KB each), and `demo/gif/<id>{,-zh-CN}.gif` (light, 960px wide, 0.45–0.93MB) for places that don't play SVG animation. A GIF's first frame is the finished card, then it replays the animation once before looping.
+- **Rebuild:** run readme-stylist `scripts/demo_storyboard.py build assets/readme/src/demo.json --out assets/readme/demo --fonts-dir <latin fonts> --fonts-dir <Noto Sans SC> --gif`, then the same for `demo.zh-CN.json`. GIFs need `rsvg-convert` (or `resvg`) and ImageMagick.
+
 ## Files
 
 | File | Canvas | Use |

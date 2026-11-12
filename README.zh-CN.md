@@ -59,11 +59,23 @@
 用 github-repo-publish 预览当前项目的发布方案。请拟好简介和 Topics，让我选仓库归属和名称，等我确认后再发布。
 ```
 
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="assets/readme/demo/preview-zh-CN-dark.svg">
+  <img alt="示意演示：输入预览提示词后，Agent 回复平台、登录账号、仓库归属、仓库名、可见性、协议、分支、项目路径、完整提交 SHA、简介、Topics 和 Website，最后给出下一步指令并盖上“等待发布确认”章" src="assets/readme/demo/preview-zh-CN-light.svg" width="100%">
+</picture>
+
+<sub>演示为示意：字段名称和顺序以 <a href="SKILL.md">SKILL.md</a> 为准，数值为示例。GIF 版本在 <a href="assets/readme/demo/gif/"><code>assets/readme/demo/gif/</code></a>。</sub>
+
 核对预览后，回复实际的仓库归属和名称。
 
 ```text
 确认发布到 owner/repo
 ```
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="assets/readme/demo/confirm-zh-CN-dark.svg">
+  <img alt="示意演示：输入“确认发布到 owner/repo”后通过 --confirm-target 确认，Agent 报告仓库链接、归属、可见性、分支、资料状态和从 GitHub 读回的提交 SHA" src="assets/readme/demo/confirm-zh-CN-light.svg" width="100%">
+</picture>
 
 <details>
 <summary><b>更多提示词</b></summary>
@@ -74,11 +86,21 @@
 用 github-repo-publish 检查这个项目并展示发布预览，到预览为止。
 ```
 
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="assets/readme/demo/dry-run-zh-CN-dark.svg">
+  <img alt="示意演示：只预览提示词返回目标仓库状态、账号、归属、可见性、分支、提交 SHA 和已检查的项目，最后停下，没有推送任何内容" src="assets/readme/demo/dry-run-zh-CN-light.svg" width="100%">
+</picture>
+
 恢复中断的发布
 
 ```text
 用 github-repo-publish 检查这个项目上一次发布的状态，并恢复到原来确认过的目标。
 ```
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="assets/readme/demo/resume-zh-CN-dark.svg">
+  <img alt="示意演示：恢复提示词读取上次的发布记录，重新检查仓库，重试同一个提交，最后所有步骤都对原来确认的目标核验通过" src="assets/readme/demo/resume-zh-CN-light.svg" width="100%">
+</picture>
 
 </details>
 

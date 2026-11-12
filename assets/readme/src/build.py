@@ -54,10 +54,26 @@ THEMES = {
 }
 
 
-def style(t):
+def style(t, motion=""):
     return f"""<style>
-.ink{{fill:{t['ink']}}} .muted{{fill:{t['muted']}}} .acc{{fill:{t['acc']}}} .paper{{fill:{t['paper']}}}
+.ink{{fill:{t['ink']}}} .muted{{fill:{t['muted']}}} .acc{{fill:{t['acc']}}} .paper{{fill:{t['paper']}}}{motion}
 </style>"""
+
+
+# Hero motion: plays once (~1.8s), animates only transform/opacity, and the
+# un-animated state IS the final frame — so reduced-motion and clients that
+# ignore CSS animation both see the complete static design.
+HERO_MOTION = """
+.mv-route{transform-box:fill-box;transform-origin:left center;animation:mv-draw .8s cubic-bezier(.4,0,.2,1) both}
+.mv-node{animation:mv-in .2s ease-out both}
+.mv-n1{animation-delay:.1s} .mv-n2{animation-delay:.45s}
+.mv-gate{animation:mv-gate .45s ease-out .8s both}
+.mv-stamp{transform-box:fill-box;transform-origin:center;animation:mv-stamp .5s cubic-bezier(.2,.8,.3,1.2) 1.25s both}
+@keyframes mv-draw{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+@keyframes mv-in{from{opacity:0}to{opacity:1}}
+@keyframes mv-gate{0%{opacity:.2}60%{opacity:1}80%{opacity:.6}100%{opacity:1}}
+@keyframes mv-stamp{0%{opacity:0;transform:scale(1.5)}60%{opacity:1;transform:scale(.96)}100%{opacity:1;transform:scale(1)}}
+@media (prefers-reduced-motion:reduce){.mv-route,.mv-node,.mv-gate,.mv-stamp{animation:none}}"""
 
 
 # --------------------------------------------------------------------------- HERO
@@ -70,7 +86,7 @@ def hero(mode):
     o.append(f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" width="{W}" height="{H}" role="img" aria-labelledby="t d">')
     o.append('<title id="t">github-repo-publish — a boarding pass for your first publish</title>')
     o.append('<desc id="d">A boarding pass from a local project to owner/repo on GitHub. It lists the preview fields the skill shows before publishing: account, owner, visibility, protocol, branch and full commit SHA. The stub is stamped "awaiting confirmation" at the --confirm-target gate.</desc>')
-    o.append(style(t))
+    o.append(style(t, HERO_MOTION))
     # shadow + ticket
     if mode == "light":
         o.append(f'<path d="{ticket}" transform="translate(8 8)" fill="{t["shadow"]}"/>')
@@ -109,15 +125,17 @@ def hero(mode):
     x1, x2 = L + wl + 22, R - wg - 22
     ly = yb - big * 0.36
     gx = (x1 + x2) / 2
-    o.append(f'<line x1="{x1:.0f}" y1="{ly:.0f}" x2="{gx-16:.0f}" y2="{ly:.0f}" stroke="{t["ink"]}" stroke-width="4"/>')
+    o.append(f'<line class="mv-route" x1="{x1:.0f}" y1="{ly:.0f}" x2="{gx-16:.0f}" y2="{ly:.0f}" stroke="{t["ink"]}" stroke-width="4"/>')
     o.append(f'<line x1="{gx+16:.0f}" y1="{ly:.0f}" x2="{x2-6:.0f}" y2="{ly:.0f}" stroke="{t["ink"]}" stroke-width="4" stroke-dasharray="10 8"/>')
     o.append(f'<path d="M{x2-14:.0f} {ly-11:.0f} L{x2+2:.0f} {ly:.0f} L{x2-14:.0f} {ly+11:.0f}" fill="none" stroke="{t["ink"]}" stroke-width="4"/>')
-    for cx in (x1 + 6, (x1 + gx) / 2):
-        o.append(f'<circle cx="{cx:.0f}" cy="{ly:.0f}" r="9" fill="{t["paper"]}" stroke="{t["ink"]}" stroke-width="4"/>')
+    for i, cx in enumerate((x1 + 6, (x1 + gx) / 2), 1):
+        o.append(f'<circle class="mv-node mv-n{i}" cx="{cx:.0f}" cy="{ly:.0f}" r="9" fill="{t["paper"]}" stroke="{t["ink"]}" stroke-width="4"/>')
     # gate: two posts with an accent bar
+    o.append('<g class="mv-gate">')
     o.append(f'<rect x="{gx-14:.0f}" y="{ly-34:.0f}" width="6" height="68" fill="{t["acc"]}"/>')
     o.append(f'<rect x="{gx+9:.0f}" y="{ly-34:.0f}" width="6" height="68" fill="{t["acc"]}"/>')
     o.append(T(gx, ly + 62, "GATE", "monob", 22, "acc", "middle", ls=3))
+    o.append("</g>")
 
     # from / to
     o.append(T(L, 314, "FROM", "mono", 22, "muted", ls=2))
@@ -164,13 +182,15 @@ def hero(mode):
 
     # stamp, rotated, crossing the perforation
     cx, cy = 1088, 392
-    stamp = [f'<g transform="rotate(-9 {cx} {cy})" opacity="{0.92 if mode=="light" else 1}">']
+    # outer group carries the CSS animation; inner group keeps the rotate attribute
+    stamp = ['<g class="mv-stamp">', f'<g transform="rotate(-9 {cx} {cy})" opacity="{0.92 if mode=="light" else 1}">']
     if mode == "dark":
         stamp.append(f'<rect x="{cx-150}" y="{cy-60}" width="300" height="120" rx="10" fill="none" stroke="{t["acc"]}" stroke-width="14" opacity="0.18"/>')
     stamp.append(f'<rect x="{cx-150}" y="{cy-60}" width="300" height="120" rx="10" fill="{t["paper"]}" fill-opacity="0.55" stroke="{t["acc"]}" stroke-width="5"/>')
     stamp.append(f'<rect x="{cx-140}" y="{cy-50}" width="280" height="100" rx="6" fill="none" stroke="{t["acc"]}" stroke-width="2"/>')
     stamp.append(T(cx, cy - 2, "AWAITING", "head", 50, "acc", "middle", ls=4))
     stamp.append(T(cx, cy + 34, "CONFIRMATION", "headm", 26, "acc", "middle", ls=5.5))
+    stamp.append("</g>")
     stamp.append("</g>")
     o += stamp
     o.append("</svg>")

@@ -3,6 +3,16 @@
 <desc id="d">A boarding pass from a local project to owner/repo on GitHub. It lists the preview fields the skill shows before publishing: account, owner, visibility, protocol, branch and full commit SHA. The stub is stamped "awaiting confirmation" at the --confirm-target gate.</desc>
 <style>
 .ink{fill:#1B1A17} .muted{fill:#6B6457} .acc{fill:#D4430F} .paper{fill:#F2ECDF}
+.mv-route{transform-box:fill-box;transform-origin:left center;animation:mv-draw .8s cubic-bezier(.4,0,.2,1) both}
+.mv-node{animation:mv-in .2s ease-out both}
+.mv-n1{animation-delay:.1s} .mv-n2{animation-delay:.45s}
+.mv-gate{animation:mv-gate .45s ease-out .8s both}
+.mv-stamp{transform-box:fill-box;transform-origin:center;animation:mv-stamp .5s cubic-bezier(.2,.8,.3,1.2) 1.25s both}
+@keyframes mv-draw{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+@keyframes mv-in{from{opacity:0}to{opacity:1}}
+@keyframes mv-gate{0%{opacity:.2}60%{opacity:1}80%{opacity:.6}100%{opacity:1}}
+@keyframes mv-stamp{0%{opacity:0;transform:scale(1.5)}60%{opacity:1;transform:scale(.96)}100%{opacity:1;transform:scale(1)}}
+@media (prefers-reduced-motion:reduce){.mv-route,.mv-node,.mv-gate,.mv-stamp{animation:none}}
 </style>
 <path d="M24 24 H918 A18 18 0 0 0 954 24 H1256 V576 H954 A18 18 0 0 0 918 576 H24 Z" transform="translate(8 8)" fill="#1B1A17"/>
 <path d="M24 24 H918 A18 18 0 0 0 954 24 H1256 V576 H954 A18 18 0 0 0 918 576 H24 Z" fill="#F2ECDF" stroke="#1B1A17" stroke-width="2"/>
@@ -12,14 +22,16 @@
 <rect x="64" y="104" width="836" height="3" fill="#1B1A17"/>
 <text class="disp ink" x="60.0" y="262.0" font-size="160" letter-spacing="2">LOCAL</text>
 <text class="disp ink" x="904.0" y="262.0" font-size="160" text-anchor="end" letter-spacing="2">GITHUB</text>
-<line x1="394" y1="204" x2="441" y2="204" stroke="#1B1A17" stroke-width="4"/>
+<line class="mv-route" x1="394" y1="204" x2="441" y2="204" stroke="#1B1A17" stroke-width="4"/>
 <line x1="473" y1="204" x2="514" y2="204" stroke="#1B1A17" stroke-width="4" stroke-dasharray="10 8"/>
 <path d="M506 193 L522 204 L506 215" fill="none" stroke="#1B1A17" stroke-width="4"/>
-<circle cx="400" cy="204" r="9" fill="#F2ECDF" stroke="#1B1A17" stroke-width="4"/>
-<circle cx="425" cy="204" r="9" fill="#F2ECDF" stroke="#1B1A17" stroke-width="4"/>
+<circle class="mv-node mv-n1" cx="400" cy="204" r="9" fill="#F2ECDF" stroke="#1B1A17" stroke-width="4"/>
+<circle class="mv-node mv-n2" cx="425" cy="204" r="9" fill="#F2ECDF" stroke="#1B1A17" stroke-width="4"/>
+<g class="mv-gate">
 <rect x="443" y="170" width="6" height="68" fill="#D4430F"/>
 <rect x="466" y="170" width="6" height="68" fill="#D4430F"/>
 <text class="monob acc" x="456.9" y="266.4" font-size="22" text-anchor="middle" letter-spacing="3">GATE</text>
+</g>
 <text class="mono muted" x="64.0" y="314.0" font-size="22" letter-spacing="2">FROM</text>
 <text class="monob ink" x="142.0" y="314.0" font-size="24">~/Code/project</text>
 <text class="mono muted" x="742.0" y="314.0" font-size="22" text-anchor="end" letter-spacing="2">TO</text>
@@ -49,10 +61,12 @@
 <text class="mono muted" x="984.0" y="276.0" font-size="22" letter-spacing="1">NOTHING IS PUSHED</text>
 <text class="mono muted" x="984.0" y="304.0" font-size="22" letter-spacing="1">BEFORE YOU CONFIRM</text>
 <path d="M984 470v72h3v-72zM990 470v72h4v-72zM997 470v72h2v-72zM1002 470v72h3v-72zM1008 470v72h6v-72zM1017 470v72h2v-72zM1022 470v72h4v-72zM1032 470v72h2v-72zM1037 470v72h2v-72zM1045 470v72h2v-72zM1050 470v72h2v-72zM1055 470v72h6v-72zM1067 470v72h2v-72zM1072 470v72h2v-72zM1077 470v72h3v-72zM1086 470v72h2v-72zM1091 470v72h6v-72zM1101 470v72h6v-72zM1110 470v72h2v-72zM1115 470v72h3v-72zM1121 470v72h6v-72zM1130 470v72h6v-72zM1139 470v72h6v-72zM1148 470v72h4v-72zM1158 470v72h3v-72zM1167 470v72h6v-72zM1179 470v72h3v-72zM1186 470v72h2v-72zM1191 470v72h2v-72zM1196 470v72h6v-72zM1206 470v72h6v-72zM1218 470v72h3v-72z" fill="#1B1A17" opacity="0.9"/>
+<g class="mv-stamp">
 <g transform="rotate(-9 1088 392)" opacity="0.92">
 <rect x="938" y="332" width="300" height="120" rx="10" fill="#F2ECDF" fill-opacity="0.55" stroke="#D4430F" stroke-width="5"/>
 <rect x="948" y="342" width="280" height="100" rx="6" fill="none" stroke="#D4430F" stroke-width="2"/>
 <text class="head acc" x="1088.0" y="390.0" font-size="50" text-anchor="middle" letter-spacing="4">AWAITING</text>
 <text class="headm acc" x="1088.0" y="426.0" font-size="26" text-anchor="middle" letter-spacing="5.5">CONFIRMATION</text>
+</g>
 </g>
 </svg>

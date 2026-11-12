@@ -1,0 +1,331 @@
+{
+  "project": "github-repo-publish",
+  "suffix": "",
+  "label": "ILLUSTRATIVE · EXAMPLE VALUES",
+  "demo": "DEMO",
+  "you": "YOU",
+  "agent": "AGENT",
+  "label_tracking": 1.5,
+  "fonts": {
+    "mono": "JBM-Regular.ttf",
+    "monob": "JBM-Bold.ttf",
+    "head": "Oswald-Bold.ttf",
+    "headm": "Oswald-Medium.ttf",
+    "fallback": [
+      "NotoSansSC-Regular.otf"
+    ],
+    "fallback_bold": [
+      "NotoSansSC-Bold.otf"
+    ]
+  },
+  "themes": {
+    "light": {
+      "paper": "#F2ECDF",
+      "ink": "#1B1A17",
+      "muted": "#6B6457",
+      "acc": "#D4430F",
+      "hair": "#CFC6B4",
+      "bubble": "#E7DFCE",
+      "edge": "#1B1A17",
+      "shadow": "#1B1A17",
+      "gif_bg": "#FFFFFF"
+    },
+    "dark": {
+      "paper": "#0F1828",
+      "ink": "#F1EADB",
+      "muted": "#8D9AB0",
+      "acc": "#FFB23F",
+      "hair": "#24324B",
+      "bubble": "#16223A",
+      "edge": "#2C3B57",
+      "shadow": null,
+      "gif_bg": "#0D1117"
+    }
+  },
+  "scenes": [
+    {
+      "id": "preview",
+      "title": "PREVIEW",
+      "summary": "The agent replies with the full publish preview and waits for confirmation.",
+      "prompt": "Use github-repo-publish to preview publishing this project. Suggest a description and topics, let me choose the owner and repository name, and wait for my confirmation.",
+      "reply": [
+        {
+          "kind": "grid",
+          "cols": 4,
+          "cells": [
+            [
+              "PLATFORM",
+              "github.com"
+            ],
+            [
+              "ACCOUNT",
+              "@you"
+            ],
+            [
+              "OWNER",
+              "owner"
+            ],
+            [
+              "REPOSITORY",
+              "repo"
+            ],
+            [
+              "TARGET",
+              "new repo"
+            ],
+            [
+              "VISIBILITY",
+              "PRIVATE"
+            ],
+            [
+              "PROTOCOL",
+              "HTTPS"
+            ],
+            [
+              "BRANCH",
+              "main"
+            ]
+          ]
+        },
+        {
+          "kind": "rule"
+        },
+        {
+          "kind": "line",
+          "k": "PROJECT",
+          "v": "~/Code/project"
+        },
+        {
+          "kind": "line",
+          "k": "COMMIT",
+          "v": "3f9c2e14b7a0d58e6c21f09a4b3d7e8c5a61f2b9",
+          "bold": true
+        },
+        {
+          "kind": "line",
+          "k": "DESCRIPTION",
+          "v": "Publish local Git projects to GitHub, preview first"
+        },
+        {
+          "kind": "line",
+          "k": "TOPICS",
+          "v": "git · github · cli"
+        },
+        {
+          "kind": "line",
+          "k": "WEBSITE",
+          "v": "left empty",
+          "tone": "muted"
+        }
+      ],
+      "footer": {
+        "k": "NEXT",
+        "v": "Confirm publish to owner/repo",
+        "command": true,
+        "stamp": [
+          "AWAITING",
+          "CONFIRMATION"
+        ]
+      }
+    },
+    {
+      "id": "confirm",
+      "title": "CONFIRM",
+      "summary": "After confirmation the agent publishes and reports what it read back from GitHub.",
+      "prompt": "Confirm publish to owner/repo",
+      "reply": [
+        {
+          "kind": "line",
+          "k": "GATE",
+          "v": "--confirm-target owner/repo matches the preview",
+          "tone": "acc",
+          "bold": true
+        },
+        {
+          "kind": "line",
+          "k": "PUSH",
+          "v": "Created branch main only"
+        },
+        {
+          "kind": "rule"
+        },
+        {
+          "kind": "line",
+          "k": "REPOSITORY",
+          "v": "https://github.com/owner/repo",
+          "bold": true
+        },
+        {
+          "kind": "grid",
+          "cols": 4,
+          "cells": [
+            [
+              "OWNER",
+              "owner"
+            ],
+            [
+              "VISIBILITY",
+              "PRIVATE"
+            ],
+            [
+              "BRANCH",
+              "main"
+            ],
+            [
+              "METADATA",
+              "applied"
+            ]
+          ]
+        },
+        {
+          "kind": "line",
+          "k": "COMMIT",
+          "v": "3f9c2e14b7a0d58e6c21f09a4b3d7e8c5a61f2b9",
+          "bold": true
+        },
+        {
+          "kind": "line",
+          "k": "READ BACK",
+          "v": "Branch main on GitHub is at this SHA"
+        }
+      ],
+      "footer": {
+        "k": "STATUS",
+        "v": "Published and verified",
+        "stamp": [
+          "PUBLISHED",
+          "READ BACK"
+        ]
+      }
+    },
+    {
+      "id": "dry-run",
+      "title": "DRY RUN",
+      "summary": "The agent inspects and shows the preview, then stops without publishing.",
+      "prompt": "Use github-repo-publish to inspect this project and show the publish preview. Do not publish.",
+      "reply": [
+        {
+          "kind": "line",
+          "k": "DESTINATION",
+          "v": "missing_or_hidden — not found, or no access",
+          "bold": true
+        },
+        {
+          "kind": "grid",
+          "cols": 4,
+          "cells": [
+            [
+              "ACCOUNT",
+              "@you"
+            ],
+            [
+              "OWNER",
+              "owner"
+            ],
+            [
+              "VISIBILITY",
+              "PRIVATE"
+            ],
+            [
+              "BRANCH",
+              "main"
+            ]
+          ]
+        },
+        {
+          "kind": "line",
+          "k": "COMMIT",
+          "v": "3f9c2e14b7a0d58e6c21f09a4b3d7e8c5a61f2b9",
+          "bold": true
+        },
+        {
+          "kind": "line",
+          "k": "CHECKED",
+          "v": "credentials · env files · large files · LFS · submodules · push workflows"
+        },
+        {
+          "kind": "line",
+          "k": "FOUND",
+          "v": "nothing to fix before publishing",
+          "tone": "muted"
+        }
+      ],
+      "footer": {
+        "k": "STOPPED",
+        "v": "Preview only — nothing was pushed",
+        "stamp": [
+          "DRY RUN",
+          "NOTHING PUSHED"
+        ]
+      }
+    },
+    {
+      "id": "resume",
+      "title": "RESUME",
+      "summary": "The agent reads the saved publish record, re-inspects, and resumes the same confirmed target.",
+      "prompt": "Use github-repo-publish to check the last publish of this project and resume it to the same confirmed target.",
+      "reply": [
+        {
+          "kind": "line",
+          "k": "RECORD",
+          "v": ".git/github-repo-publish"
+        },
+        {
+          "kind": "grid",
+          "cols": 3,
+          "cells": [
+            [
+              "REPOSITORY",
+              "verified"
+            ],
+            [
+              "PUSH",
+              "requested"
+            ],
+            [
+              "METADATA",
+              "requested"
+            ]
+          ]
+        },
+        {
+          "kind": "line",
+          "k": "INSPECT",
+          "v": "Repo ID and visibility match · remote still empty"
+        },
+        {
+          "kind": "line",
+          "k": "RESUME",
+          "v": "Retrying the same commit to owner/repo",
+          "bold": true
+        },
+        {
+          "kind": "grid",
+          "cols": 3,
+          "cells": [
+            [
+              "REPOSITORY",
+              "verified"
+            ],
+            [
+              "PUSH",
+              "verified"
+            ],
+            [
+              "METADATA",
+              "verified"
+            ]
+          ]
+        }
+      ],
+      "footer": {
+        "k": "TARGET",
+        "v": "owner/repo — same confirmed target",
+        "stamp": [
+          "RESUMED",
+          "SAME TARGET"
+        ]
+      }
+    }
+  ]
+}

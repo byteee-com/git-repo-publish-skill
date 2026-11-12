@@ -66,11 +66,23 @@ Run the agent where it can access the source project and an authenticated GitHub
 Use github-repo-publish to preview publishing this project. Suggest a description and topics, let me choose the owner and repository name, and wait for my confirmation.
 ```
 
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="assets/readme/demo/preview-dark.svg">
+  <img alt="Illustrative demo: the preview prompt is typed, then the agent replies with platform, account, owner, repository, visibility, protocol, branch, project path, full commit SHA, description, topics and website, ending with the next instruction and an Awaiting confirmation stamp" src="assets/readme/demo/preview-light.svg" width="100%">
+</picture>
+
+<sub>Demos are illustrative: field names and order follow <a href="SKILL.md">SKILL.md</a>, values are examples. GIF versions are in <a href="assets/readme/demo/gif/"><code>assets/readme/demo/gif/</code></a>.</sub>
+
 After reviewing the preview, reply with the target it shows, for example:
 
 ```text
 Confirm publish to owner/repo
 ```
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="assets/readme/demo/confirm-dark.svg">
+  <img alt="Illustrative demo: Confirm publish to owner/repo passes the --confirm-target gate, then the agent reports the repository link, owner, visibility, branch, metadata and the commit SHA read back from GitHub" src="assets/readme/demo/confirm-light.svg" width="100%">
+</picture>
 
 <details>
 <summary><b>More prompts</b></summary>
@@ -81,11 +93,21 @@ Dry run only — inspect and preview, then stop:
 Use github-repo-publish to inspect this project and show the publish preview. Do not publish.
 ```
 
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="assets/readme/demo/dry-run-dark.svg">
+  <img alt="Illustrative demo: the dry-run prompt returns the destination status, account, owner, visibility, branch, commit SHA and the checks performed, then stops with nothing pushed" src="assets/readme/demo/dry-run-light.svg" width="100%">
+</picture>
+
 Resume an interrupted publish:
 
 ```text
 Use github-repo-publish to check the last publish of this project and resume it to the same confirmed target.
 ```
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="assets/readme/demo/resume-dark.svg">
+  <img alt="Illustrative demo: the resume prompt reads the saved publish record, re-inspects the repository, retries the same commit and ends with every operation verified against the same confirmed target" src="assets/readme/demo/resume-light.svg" width="100%">
+</picture>
 
 </details>
 
