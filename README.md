@@ -28,16 +28,37 @@
 | | |
 | :-- | :-- |
 | **Use it for** | Publishing a local Git project for the first time, or finishing an interrupted first publish |
-| **Targets** | A new repository, or an empty one you name explicitly — personal or organization, private or public |
+| **Targets** | A new repository, or an empty one you name explicitly. GitHub: personal or organization, private or public. Codeup: organization or group, private or internal |
 | **Not for** | Pushing to repositories that already have branches or tags, or ongoing sync after the first publish |
-| **Runs on** | macOS or Linux, with Git, GitHub CLI (`gh`), and Python 3.8+ |
+| **Runs on** | macOS or Linux, with Git and Python 3.8+; GitHub also requires GitHub CLI (`gh`) |
 
 ### Hosting providers
 
 - ✅ GitHub (github.com) — supported
 - GitLab — planned
 - Gitee — planned
-- Alibaba Cloud Codeup — planned
+- ✅ Alibaba Cloud Codeup — central edition, HTTPS; [configuration and publishing guide](references/codeup.md)
+
+### Codeup configuration
+
+Create a profile with your organization ID, full parent path and HTTPS clone username:
+
+```sh
+python3 scripts/codeup_publish.py configure --profile work \
+  --organization-id YOUR_ORGANIZATION_ID \
+  --namespace YOUR_ORG_PATH/team --username YOUR_CLONE_USERNAME
+python3 scripts/codeup_publish.py config --profile work
+```
+
+Set `CODEUP_TOKEN` in your terminal using your secret manager or a hidden prompt; never paste it into chat or commit it. Profiles store only non-secret settings outside the repository. Then ask:
+
+```text
+Use git-repo-publish to preview publishing this project to Codeup.
+Use profile work and target YOUR_ORG_PATH/team/my-project, private visibility.
+Wait for my confirmation before creating the repository or pushing.
+```
+
+Codeup supports `private` and `internal` (visible inside the organization). This implementation supports central edition over HTTPS; Region instances and SSH publishing are not supported yet. See the [Codeup guide](references/codeup.md) for token permissions, tags and recovery. The walkthrough and artwork below illustrate GitHub.
 
 ## How it works
 
@@ -125,9 +146,9 @@ The skill uses the client's native question interface when available. For exampl
 | | |
 | :-- | :-- |
 | **Platform** | macOS or Linux |
-| **Tools** | Git, Python 3.8+, and a recent [GitHub CLI](https://cli.github.com/) |
-| **Authentication** | One or more accounts logged in with `gh`; credentials stay in GitHub CLI |
-| **Push protocol** | HTTPS by default, or SSH — including an existing local SSH alias for the chosen account |
+| **Tools** | Git and Python 3.8+; GitHub requires a recent [GitHub CLI](https://cli.github.com/) |
+| **Authentication** | GitHub: accounts logged in with `gh`. Codeup: a profile and personal access token supplied through an environment variable |
+| **Push protocol** | GitHub: HTTPS or SSH, including existing SSH aliases. Codeup: HTTPS |
 
 It uses the GitHub account you select, with SSH or HTTPS for the push. See the [GitHub operations guide](references/github.md) for authentication, command details, [resuming an interrupted publish](references/github.md#中断恢复), and how to [record trial publishes](references/github.md#三次真实发布的记录方法).
 

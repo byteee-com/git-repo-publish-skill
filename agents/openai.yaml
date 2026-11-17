@@ -1,4 +1,4 @@
 interface:
   display_name: "Git 仓库首次发布"
-  short_description: "预览本地 Git 项目的首次发布，创建仓库并验证提交。目前支持 GitHub"
+  short_description: "预览本地 Git 项目的首次发布，创建仓库并验证提交。支持 GitHub 和云效 Codeup"
   default_prompt: "用 $git-repo-publish 带我预览当前项目的首次发布。让我确认仓库归属和名称，再由我触发发布。"

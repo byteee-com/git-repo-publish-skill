@@ -21,16 +21,37 @@
 | 项目 | 说明 |
 | --- | --- |
 | 适用场景 | 首次发布本地项目，或恢复一次中断的首次发布 |
-| 目标仓库 | 新建仓库，或你明确指定的空仓库。支持个人或组织、公开或私有 |
+| 目标仓库 | 新建仓库，或你明确指定的空仓库。GitHub 支持个人或组织、公开或私有；Codeup 支持组织或代码组、私有或组织内公开 |
 | 范围 | 面向首次发布。已有分支或标签的仓库，以及后续日常同步，请使用常规 Git 流程 |
-| 运行环境 | macOS 或 Linux，使用 Git、GitHub CLI（`gh`）和 Python 3.8+ |
+| 运行环境 | macOS 或 Linux，使用 Git 和 Python 3.8+；GitHub 额外需要 GitHub CLI（`gh`） |
 
 ### 托管平台
 
 - ✅ GitHub（github.com，已支持）
 - GitLab（后续支持）
 - Gitee（后续支持）
-- 云效 Codeup（后续支持）
+- ✅ 云效 Codeup（中心版，HTTPS；[配置与发布手册](references/codeup.md)）
+
+### 配置 Codeup
+
+用组织 ID、完整父路径和 HTTPS 克隆账号创建配置档：
+
+```sh
+python3 scripts/codeup_publish.py configure --profile work \
+  --organization-id 你的组织ID \
+  --namespace 组织路径/team --username 你的克隆账号
+python3 scripts/codeup_publish.py config --profile work
+```
+
+令牌通过终端中的 `CODEUP_TOKEN` 环境变量提供，可使用密码管理器或隐藏输入。不要在聊天中粘贴令牌，也不要提交到仓库。配置档保存在仓库外，只包含非敏感字段。之后可以这样使用：
+
+```text
+用 git-repo-publish 预览把当前项目发布到 Codeup。
+使用 work 配置档，目标为 组织路径/team/my-project，私有。
+展示完整方案后等我确认，再创建仓库和推送。
+```
+
+Codeup 可见性为 `private`（私有）或 `internal`（组织内公开）。当前实现支持中心版 HTTPS，暂不支持 Region 实例和 SSH 发布。令牌权限、标签和中断恢复见 [Codeup 手册](references/codeup.md)。下方流程图与演示以 GitHub 为例。
 
 ## 工作流程
 
@@ -118,9 +139,9 @@
 | 项目 | 要求 |
 | --- | --- |
 | 平台 | macOS 或 Linux |
-| 工具 | Git、Python 3.8+ 和新版 [GitHub CLI](https://cli.github.com/) |
-| 登录 | 通过 `gh` 登录至少一个 GitHub 账号，凭据由 GitHub CLI 管理 |
-| 推送协议 | SSH 或 HTTPS。可使用已配置的 SSH 别名，未指定且 `gh` 未配置时建议 HTTPS |
+| 工具 | Git、Python 3.8+；GitHub 需要新版 [GitHub CLI](https://cli.github.com/) |
+| 登录 | GitHub 通过 `gh` 登录；Codeup 使用配置档和通过环境变量提供的个人访问令牌 |
+| 推送协议 | GitHub 支持 SSH 或 HTTPS，可使用已有 SSH 别名；Codeup 使用 HTTPS |
 
 登录方式和具体命令见 [GitHub 操作手册](references/github.md)。手册也介绍了如何[恢复中断的发布](references/github.md#中断恢复)和[记录试用结果](references/github.md#三次真实发布的记录方法)。
 
