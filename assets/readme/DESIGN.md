@@ -1,8 +1,27 @@
 # README design record
 
-Produced with the `beauty-readme` skill (concept-first workflow). Keep new README assets consistent with this record.
+## Current README cover
 
-## Concept
+The cover shows a sample publish preview. A Git branch line ends at a two-bar confirmation gate, and the preview card holds the repository name, visibility, protocol, and pending state. The labels and defaults come from [the skill](../../SKILL.md#检查项目和目标) and the [GitHub guide](../../references/github.md#登录和预览). `owner/repo` is an example.
+
+The compact editorial layout keeps the install command close to the top. The large headline and monospace repository name carry the hierarchy. The terracotta or amber accent appears only at the gate and in the pending state. The light cover resembles a printed brief. The dark cover retains the original departure board palette and adds ticks beneath the branch line. Both use the same information and no motion. The READMEs retain the workflow diagram and place the prompt demos in expandable examples.
+
+| | Light | Dark |
+| --- | --- | --- |
+| Canvas | `#F6F0E4` | `#141E30` |
+| Preview card | `#FFFCF6` | `#101929` |
+| Text | `#251E18` | `#FAEFE0` |
+| Confirmation accent | `#963C21` | `#FFC186` |
+
+Rebuild the covers with `python3 assets/readme/src/publish_preview.py FONT_DIRECTORY`. The generator uses FontTools and the SIL OFL variable fonts [Bricolage Grotesque](https://github.com/google/fonts/tree/main/ofl/bricolagegrotesque), [JetBrains Mono](https://github.com/google/fonts/tree/main/ofl/jetbrainsmono), and [Noto Sans SC](https://github.com/google/fonts/tree/main/ofl/notosanssc). Save them as `BricolageGrotesque.ttf`, `JetBrainsMono.ttf`, and `NotoSansSC.ttf`. All visible text is outlined in the generated SVGs.
+
+**Review log.** In the first 830 px renders, the Chinese headline lines nearly touched and the fixed-width confirmation box placed the status dot too close to the English label. The revised cover shrinks the Chinese headline slightly, adds space between its lines, and sizes the confirmation box to each translation. Rendered both themes and languages at 830 px and 360 px.
+
+## Original artwork
+
+The following notes document the original covers, the workflow diagram, and the demo assets.
+
+### Concept
 
 **A first publish is a boarding pass.** Your project travels from a local path to `owner/repo`; it is checked at a gate and only boards after you confirm.
 
@@ -19,19 +38,19 @@ Rejected candidates:
 | Shipping manifest / customs form | Same evidence fit, but harder to recognise in 3 seconds at README width |
 | Terminal session showing `inspect` output | The skill is driven through chat, not a single command, so a terminal would misrepresent how it's used |
 
-## Evidence
+### Evidence
 
 The hero is a re-typeset version of the skill's real publish preview. Field names and order come from `SKILL.md` ("准备并预览": platform, path, branch and full SHA, account, owner, repository, visibility, protocol). Values are obvious placeholders: `~/Code/project`, `@you`, `owner/repo`, and an example 40-character SHA. They are not a real repository.
 
 The workflow nodes use real subcommands and stages: `accounts`, `owners`, `inspect`, preview, `--confirm-target`, publish, read-back verify, `resume` (from `SKILL.md` and `references/github.md`).
 
-## Tension
+### Tension
 
 - Extreme scale: 160px `LOCAL` / `GITHUB` against 22px field labels (≈ 7:1)
 - A single accent, used only on the gate and the stamp
 - The stamp is rotated −9° and is the only off-grid element
 
-## Tokens
+### Tokens
 
 | Token | Light: paper ticket | Dark: night departure board |
 | :-- | :-- | :-- |
@@ -44,7 +63,7 @@ The workflow nodes use real subcommands and stages: `accounts`, `owners`, `inspe
 
 Dark is a separate scene, not an inversion. It adds a dot-matrix texture on the stub, split-flap seams through the big letters, and a glowing stamp. Light uses a hard offset shadow, like a printed card.
 
-## Type
+### Type
 
 All text is converted to paths, so it renders identically everywhere. Fonts are SIL OFL:
 
@@ -53,7 +72,7 @@ All text is converted to paths, so it renders identically everywhere. Fonts are 
 - Fields and code: JetBrains Mono Regular / Bold
 - Minimum size: 22px on a 1280 canvas, ≈ 14px at GitHub's ~830px column
 
-## Motion
+### Motion
 
 Only the hero moves, and only once (about 1.8s). The motion acts out the one state change in the concept: the route reaches the gate, then the stub is stamped.
 
@@ -71,7 +90,7 @@ Rules:
 - The workflow diagram stays static. It is read, not watched.
 - Classes live on wrapper groups (`mv-route`, `mv-node`, `mv-gate`, `mv-stamp`), so they survive text-to-path and `localize_zh.py`.
 
-## Prompt demos
+### Prompt demos
 
 One short demo per README prompt, generated from a storyboard rather than recorded. Each demo is a chat card: the prompt types out, then the agent's reply appears line by line and ends on a stamp. Each plays once (4–7s), and the resting state is the final frame.
 
@@ -87,7 +106,7 @@ One short demo per README prompt, generated from a storyboard rather than record
 - **Output:** the README uses `demo/gif/<id>{,-zh-CN}-{light,dark}.gif` (960px wide, 10fps, 64 colors, 0.41–0.88MB each), switched by `<picture>`. They loop forever: the prompt types in, the reply appears, and the finished card holds for 3s before replaying. Looping was chosen because these demos read like screen recordings; an SVG that plays once has usually finished before the reader scrolls to it. `demo/<id>{,-zh-CN}-{light,dark}.svg` (43–79KB, plays once, final state is static) are the vector sources and the static fallback. For platforms that only show the first frame, rebuild with `--gif-start final`.
 - **Rebuild:** run beauty-readme `scripts/demo_storyboard.py build assets/readme/src/demo.json --out assets/readme/demo --fonts-dir <latin fonts> --fonts-dir <Noto Sans SC> --gif`, then the same for `demo.zh-CN.json`. GIFs need `rsvg-convert` (or `resvg`) and ImageMagick.
 
-## Files
+### Files
 
 | File | Canvas | Use |
 | :-- | :-- | :-- |
@@ -100,7 +119,7 @@ One short demo per README prompt, generated from a storyboard rather than record
 
 Generate the Chinese artwork with `python3 assets/readme/src/localize_zh.py <font-directory>` from the project root. The script uses FontTools and [Noto Sans SC Regular and Bold](https://github.com/notofonts/noto-cjk/tree/main/Sans/SubsetOTF/SC) under the SIL Open Font License.
 
-## Review log
+### Review log
 
 Rendered with `rsvg-convert` at 1280 / 830 / 360px and checked against `beauty-readme/references/self-check.md`.
 
@@ -112,6 +131,6 @@ Rendered with `rsvg-convert` at 1280 / 830 / 360px and checked against `beauty-r
 | 2 | Workflow: PUBLISH crowded the gate post; VERIFY too close to the arrow | Moved PUBLISH right and VERIFY left; recentred the resume lane |
 | 3 | "interrupted" label collided with the resume diamond | Moved it next to the drop-down branch: "if interrupted" |
 
-## Facts shown in assets
+### Facts shown in assets
 
 The README links to the project license. The illustrations show the publishing workflow.

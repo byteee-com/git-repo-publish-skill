@@ -1,40 +1,142 @@
 [English](README.md) · **简体中文**
 
+# git-repo-publish
+
+把本地 Git 项目首次发布到 GitHub 或云效 Codeup 的 [Agent Skill](https://agentskills.io/specification)。
+
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="assets/readme/hero-zh-CN-dark.svg">
-  <img alt="首次发布登机牌，从本地项目到 GitHub 仓库。核对账号、归属、可见性、协议、分支和完整提交 SHA 后，确认发布。" src="assets/readme/hero-zh-CN-light.svg" width="100%">
+  <source media="(prefers-color-scheme: dark)" srcset="assets/readme/zh-CN/publish-preview-dark.svg">
+  <img src="assets/readme/zh-CN/publish-preview-light.svg" width="100%" alt="首次发布预览，目标是 owner/repo，私有仓库，使用 SSH 推送，等待确认">
 </picture>
 
-[![许可证：MIT](https://img.shields.io/badge/License-MIT-d4430f?style=flat-square)](LICENSE)
-[![兼容 Agent Skills](https://img.shields.io/badge/Agent%20Skills-Compatible-57534e?style=flat-square)](#安装)
-[![运行平台：macOS 和 Linux](https://img.shields.io/badge/Platforms-macOS%20%7C%20Linux-57534e?style=flat-square)](#运行要求)
-[![推送协议：SSH 和 HTTPS](https://img.shields.io/badge/Push-SSH%20%7C%20HTTPS-57534e?style=flat-square)](references/github.md)
+[安装](#安装) · [首次发布](#使用) · [工作流程](#工作流程) · [配置 Codeup](#配置-codeup) · [运行要求](#运行要求) · [MIT 许可证](LICENSE)
 
-[安装](#安装) · [使用](#使用) · [工作流程](#工作流程) · [运行要求](#运行要求) · [操作手册](references/github.md) · [许可证](#许可证)
+## 安装
 
----
+最新版 Skills CLI 需要 Node.js 22.20 或更新版本，以及 npm。
 
-## 项目简介
+```sh
+npx skills add \
+  byteee-com/git-repo-publish-skill \
+  --skill git-repo-publish --global
+```
 
-`git-repo-publish` 是一个可在多个 Agent 客户端使用的 [Agent Skill](https://agentskills.io/specification)，用于首次发布本地 Git 项目。它会预览目标仓库和要发布的文件，拟好简介和 Topics 供你筛选，并在推送后核对远端提交。发布中断后可以恢复。
+按提示选择客户端。`--global` 让 skill 在多个项目中可用，省略它则安装到当前项目。 [Skills CLI 参数](https://github.com/vercel-labs/skills/blob/main/docs/commands.md#skills-add)
 
-| 项目 | 说明 |
+<details>
+<summary>各客户端的调用方式</summary>
+
+| 客户端 | 如何调用 |
 | --- | --- |
-| 适用场景 | 首次发布本地项目，或恢复一次中断的首次发布 |
-| 目标仓库 | 新建仓库，或你明确指定的空仓库。GitHub 支持个人或组织、公开或私有；Codeup 支持组织或代码组、私有或组织内公开 |
-| 范围 | 面向首次发布。已有分支或标签的仓库，以及后续日常同步，请使用常规 Git 流程 |
-| 运行环境 | macOS 或 Linux，使用 Git 和 Python 3.8+；GitHub 额外需要 GitHub CLI（`gh`） |
+| [Codex](https://learn.chatgpt.com/docs/build-skills) | 在聊天中输入 `$git-repo-publish` |
+| [Claude Code](https://code.claude.com/docs/en/skills) | 输入 `/git-repo-publish` |
+| [Cursor](https://cursor.com/docs/skills) | 在 Agent 聊天中输入 `/` 并选择 `git-repo-publish` |
+| [Gemini CLI](https://geminicli.com/docs/cli/skills/) | 用 `/skills list` 确认已加载，再按名称调用 |
+| [OpenCode](https://opencode.ai/docs/skills/) | 让 OpenCode 使用 `git-repo-publish` |
 
-### 托管平台
+</details>
 
-- ✅ GitHub（github.com，已支持）
-- GitLab（后续支持）
-- Gitee（后续支持）
-- ✅ 云效 Codeup（中心版，HTTPS；[配置与发布手册](references/codeup.md)）
+## 使用
+
+### 连接 GitHub
+
+第一次配置时，运行下列命令，按提示生成或上传 SSH 公钥。测试连接后，核对 GitHub 返回的用户名是不是你要用于发布的账号。 [GitHub CLI 登录说明](https://cli.github.com/manual/gh_auth_login) · [SSH 连接测试](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/testing-your-ssh-connection)
+
+```sh
+gh auth login --hostname github.com --web --git-protocol ssh
+ssh -T git@github.com
+```
+
+首次连接 SSH 时，先与 GitHub 公布的主机指纹核对一致，再接受。 [GitHub SSH 主机指纹](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/githubs-ssh-key-fingerprints)
+
+SSH 已配好、只缺 `gh` 登录时，运行 `gh auth login --hostname github.com --web --skip-ssh-key`。使用多个账号时，可以告诉 skill 要用哪个 GitHub 账号和已有的 SSH 别名。发布前，skill 会核对 SSH 登录身份是否与所选账号一致。也可以明确指定 HTTPS。 [GitHub 操作手册](references/github.md)
+
+### 预览并确认
+
+用客户端打开要发布的项目，在聊天中输入。
+
+```text
+用 git-repo-publish 预览当前项目的发布方案。请拟好简介和 Topics，让我选仓库归属和名称，等我确认后再发布。
+```
+
+客户端支持原生提问框时，skill 会用它收集选择。例如 Codex 的结构化提问和 Claude Code 的 `AskUserQuestion`。也可以在聊天里回答同样的选项。Website 可留空，发布前会展示完整方案供你确认。
+
+核对预览里的账号、目标、可见性、分支及拟发布的文件或提交。GitHub 新仓库默认 **私有**，推送默认走 **SSH**。确认时填入预览中的实际目标。
+
+```text
+确认发布到 owner/repo
+```
+
+<details>
+<summary>查看预览与确认演示</summary>
+
+仓库名和提交 SHA 均为示例值。预览演示使用可选的 HTTPS 推送。 [静态版本](assets/readme/demo/)
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="assets/readme/demo/gif/preview-zh-CN-dark.gif">
+  <img src="assets/readme/demo/gif/preview-zh-CN-light.gif" width="100%" alt="发布预览演示，展示目标仓库、账号、分支、提交和拟写入的仓库资料，等待确认">
+</picture>
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="assets/readme/demo/gif/confirm-zh-CN-dark.gif">
+  <img src="assets/readme/demo/gif/confirm-zh-CN-light.gif" width="100%" alt="确认发布演示，完成后返回已核验的仓库链接、分支和提交 SHA">
+</picture>
+
+</details>
+
+## 工作流程
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="assets/readme/workflow-zh-CN-dark.svg">
+  <img src="assets/readme/workflow-zh-CN-light.svg" width="100%" alt="检查并预览，确认目标后发布和核验。如果中途失败，重新检查并恢复到同一个已确认的目标。">
+</picture>
+
+1. **检查项目和目标。** 核对 Git 根目录、分支、提交和拟发布文件，检查凭据、大文件、LFS、子模块及推送触发的工作流。项目还没有提交时，先预览首个提交拟包含的文件。远端可以新建，也可以复用你明确指定的空仓库。
+2. **按确认的方案发布。** 你确认目标和预览后，skill 创建或复用仓库，推送选定分支，并按平台能力写入选定的简介、Topics 和网站。
+3. **回读远端结果。** Skill 核对远端分支和完整提交 SHA，返回仓库链接。中断时可检查已保存的状态，再继续同一次发布。 [发布验证与恢复](references/github.md#中断恢复)
+
+<details>
+<summary>只预览和中断恢复的提示词</summary>
+
+**只检查和预览**
+
+```text
+用 git-repo-publish 检查这个项目并展示发布预览，到预览为止。
+```
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="assets/readme/demo/gif/dry-run-zh-CN-dark.gif">
+  <img src="assets/readme/demo/gif/dry-run-zh-CN-light.gif" width="100%" alt="只预览演示，返回目标状态和已完成的检查后停止">
+</picture>
+
+**恢复中断的发布**
+
+```text
+用 git-repo-publish 检查这个项目上一次发布的状态，并恢复到原来确认过的目标。
+```
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="assets/readme/demo/gif/resume-zh-CN-dark.gif">
+  <img src="assets/readme/demo/gif/resume-zh-CN-light.gif" width="100%" alt="恢复发布演示，读取保存的计划后核对同一个目标和提交">
+</picture>
+
+</details>
+
+## 托管平台
+
+| 平台 | 可见性 | 推送协议 |
+| --- | --- | --- |
+| [GitHub](references/github.md)，个人或组织仓库 | 私有或公开 | 默认 SSH，可选 HTTPS |
+| [云效 Codeup](references/codeup.md)，中心版，组织或代码组仓库 | 私有或组织内公开 | HTTPS |
+
+GitLab 和 Gitee 计划后续支持。已有分支或标签的仓库，以及后续日常同步，请使用常规 Git 流程。
 
 ### 配置 Codeup
 
-用组织 ID、完整父路径和 HTTPS 克隆账号创建配置档：
+<details>
+<summary>创建 Codeup 配置档并预览发布</summary>
+
+在已安装的 skill 目录里，用组织 ID、完整父路径和 HTTPS 克隆账号创建配置档。
 
 ```sh
 python3 scripts/codeup_publish.py configure --profile work \
@@ -43,7 +145,7 @@ python3 scripts/codeup_publish.py configure --profile work \
 python3 scripts/codeup_publish.py config --profile work
 ```
 
-令牌通过终端中的 `CODEUP_TOKEN` 环境变量提供，可使用密码管理器或隐藏输入。不要在聊天中粘贴令牌，也不要提交到仓库。配置档保存在仓库外，只包含非敏感字段。之后可以这样使用：
+通过密码管理器或隐藏输入，在终端里设置 `CODEUP_TOKEN`。配置档保存在项目仓库外，只包含非敏感字段。 [Codeup 令牌权限和恢复流程](references/codeup.md)
 
 ```text
 用 git-repo-publish 预览把当前项目发布到 Codeup。
@@ -51,99 +153,18 @@ python3 scripts/codeup_publish.py config --profile work
 展示完整方案后等我确认，再创建仓库和推送。
 ```
 
-Codeup 可见性为 `private`（私有）或 `internal`（组织内公开）。当前实现支持中心版 HTTPS，暂不支持 Region 实例和 SSH 发布。令牌权限、标签和中断恢复见 [Codeup 手册](references/codeup.md)。下方流程图与演示以 GitHub 为例。
-
-## 工作流程
-
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="assets/readme/workflow-zh-CN-dark.svg">
-  <img alt="发布流程为检查、预览、确认、推送和核验。中断后先重新检查同一个已确认的目标，再恢复发布。" src="assets/readme/workflow-zh-CN-light.svg" width="100%">
-</picture>
-
-- **先预览。** Agent 会展示项目路径、登录账号、仓库归属与名称、可见性、推送协议、分支、完整提交 SHA，以及简介和 Topics 草稿。它也会检查拟发布内容中的凭据、大文件、LFS、子模块及推送会触发的工作流。
-- **由你确认。** 看完预览后，确认要发布到的 `owner/repo`。建议的仓库名和已登录的账号只用于准备方案。
-- **推送后核验。** 脚本从 GitHub 读回仓库和分支，核对实际推送的提交。若中途失败，可以检查状态并从同一个目标恢复。
-
-## 安装
-
-将完整的 skill 文件夹复制到客户端会读取的目录，保留 `SKILL.md`、`scripts/` 和 `references/`。复制后的文件夹命名为 `git-repo-publish`。
-
-| 客户端 | 项目中的安装目录 | 如何调用 |
-| --- | --- | --- |
-| [Codex](https://learn.chatgpt.com/docs/build-skills#where-codex-loads-local-skills) | `.agents/skills/git-repo-publish/` | 在聊天中调用 `$git-repo-publish` |
-| [Claude Code](https://code.claude.com/docs/en/skills#choose-where-skills-load) | `.claude/skills/git-repo-publish/` | 输入 `/git-repo-publish` |
-| [Cursor](https://cursor.com/docs/skills#skill-directories) | `.agents/skills/git-repo-publish/` | 在 Agent 聊天中输入 `/` 并选择该 skill |
-| [Gemini CLI](https://geminicli.com/docs/cli/skills/) | `.agents/skills/git-repo-publish/` | 用 `/skills list` 确认已加载，再按名称调用 |
-| [OpenCode](https://opencode.ai/docs/skills/#discovery) | `.agents/skills/git-repo-publish/` | 让 OpenCode 按名称加载并使用该 skill |
-
-> [!TIP]
-> 支持 `.agents/skills/` 的客户端可共用项目里的同一份 skill。其他兼容 Agent Skills 规范的客户端可以按各自的文档安装。`agents/openai.yaml` 为 Codex 提供可选的界面配置。
-
-## 使用
-
-在 Agent 能访问项目文件，且 GitHub CLI 已登录的环境中，先请它生成发布预览。
-
-```text
-用 git-repo-publish 预览当前项目的发布方案。请拟好简介和 Topics，让我选仓库归属和名称，等我确认后再发布。
-```
-
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="assets/readme/demo/gif/preview-zh-CN-dark.gif">
-  <img alt="示意演示：输入预览提示词后，Agent 回复平台、登录账号、仓库归属、仓库名、可见性、协议、分支、项目路径、完整提交 SHA、简介、Topics 和 Website，最后给出下一步指令并盖上“等待发布确认”章" src="assets/readme/demo/gif/preview-zh-CN-light.gif" width="100%">
-</picture>
-
-<sub>演示为示意：字段名称和顺序以 <a href="SKILL.md">SKILL.md</a> 为准，数值为示例。循环播放的 GIF；静态 SVG 版本在 <a href="assets/readme/demo/"><code>assets/readme/demo/</code></a>。</sub>
-
-核对预览后，回复实际的仓库归属和名称。
-
-```text
-确认发布到 owner/repo
-```
-
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="assets/readme/demo/gif/confirm-zh-CN-dark.gif">
-  <img alt="示意演示：输入“确认发布到 owner/repo”后通过 --confirm-target 确认，Agent 报告仓库链接、归属、可见性、分支、资料状态和从 GitHub 读回的提交 SHA" src="assets/readme/demo/gif/confirm-zh-CN-light.gif" width="100%">
-</picture>
-
-<details>
-<summary><b>更多提示词</b></summary>
-
-只检查和预览
-
-```text
-用 git-repo-publish 检查这个项目并展示发布预览，到预览为止。
-```
-
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="assets/readme/demo/gif/dry-run-zh-CN-dark.gif">
-  <img alt="示意演示：只预览提示词返回目标仓库状态、账号、归属、可见性、分支、提交 SHA 和已检查的项目，最后停下，没有推送任何内容" src="assets/readme/demo/gif/dry-run-zh-CN-light.gif" width="100%">
-</picture>
-
-恢复中断的发布
-
-```text
-用 git-repo-publish 检查这个项目上一次发布的状态，并恢复到原来确认过的目标。
-```
-
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="assets/readme/demo/gif/resume-zh-CN-dark.gif">
-  <img alt="示意演示：恢复提示词读取上次的发布记录，重新检查仓库，重试同一个提交，最后所有步骤都对原来确认的目标核验通过" src="assets/readme/demo/gif/resume-zh-CN-light.gif" width="100%">
-</picture>
-
 </details>
-
-客户端支持原生提问框时，skill 会用它收集选择。例如 Codex 的结构化提问和 Claude Code 的 `AskUserQuestion`。也可以在聊天里回答同样的选项。Website 可留空，发布前会展示完整方案供你确认。
 
 ## 运行要求
 
 | 项目 | 要求 |
 | --- | --- |
-| 平台 | macOS 或 Linux |
-| 工具 | Git、Python 3.8+；GitHub 需要新版 [GitHub CLI](https://cli.github.com/) |
-| 登录 | GitHub 通过 `gh` 登录；Codeup 使用配置档和通过环境变量提供的个人访问令牌 |
-| 推送协议 | GitHub 默认 SSH，支持已有 SSH 别名，也可选 HTTPS。Codeup 使用 HTTPS。 |
+| 运行环境 | macOS 或 Linux、Git、Python 3.8+ |
+| 安装工具 | 包含 npm 和 `npx` 的 Node.js 22.20+ |
+| GitHub 认证 | 新版 GitHub CLI（`gh`），走 SSH 时还需对应账号的 SSH 密钥 |
+| Codeup 认证 | 配置档，以及通过环境变量提供的个人访问令牌 |
 
-登录方式和具体命令见 [GitHub 操作手册](references/github.md)。手册也介绍了如何[恢复中断的发布](references/github.md#中断恢复)和[记录试用结果](references/github.md#三次真实发布的记录方法)。
+[GitHub 操作手册](references/github.md) · [Codeup 操作手册](references/codeup.md) · [记录试用结果](references/github.md#三次真实发布的记录方法)
 
 ## 许可证
 

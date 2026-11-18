@@ -1,47 +1,142 @@
 **English** · [简体中文](README.zh-CN.md)
 
+# git-repo-publish
+
+An [Agent Skill](https://agentskills.io/specification) for publishing a local Git project to GitHub or Alibaba Cloud Codeup for the first time.
+
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="assets/readme/hero-dark.svg">
-  <img alt="A boarding pass for a first publish: from ~/Code/project to owner/repo, listing account, owner, visibility, protocol, branch and full commit SHA, with the stub stamped Awaiting confirmation at the --confirm-target gate" src="assets/readme/hero-light.svg" width="100%">
+  <source media="(prefers-color-scheme: dark)" srcset="assets/readme/en/publish-preview-dark.svg">
+  <img src="assets/readme/en/publish-preview-light.svg" width="100%" alt="First publish preview for owner/repo, with private visibility and SSH, awaiting confirmation">
 </picture>
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-d4430f?style=flat-square)](LICENSE)
-[![Agent Skills compatible](https://img.shields.io/badge/Agent%20Skills-Compatible-57534e?style=flat-square)](#install)
-[![Platforms: macOS and Linux](https://img.shields.io/badge/Platforms-macOS%20%7C%20Linux-57534e?style=flat-square)](#requirements)
-[![Push protocols: SSH and HTTPS](https://img.shields.io/badge/Push-SSH%20%7C%20HTTPS-57534e?style=flat-square)](references/github.md)
+[Install](#install) · [First publish](#use) · [How it works](#how-it-works) · [Codeup](#codeup-configuration) · [Requirements](#requirements) · [MIT License](LICENSE)
 
-<p>
-  <a href="#install">Install</a> ·
-  <a href="#use">Use</a> ·
-  <a href="#how-it-works">How it works</a> ·
-  <a href="#requirements">Requirements</a> ·
-  <a href="references/github.md">Operations guide</a> ·
-  <a href="#license">License</a>
-</p>
+## Install
 
----
+The latest Skills CLI requires Node.js 22.20 or newer and npm.
 
-## Overview
+```sh
+npx skills add \
+  byteee-com/git-repo-publish-skill \
+  --skill git-repo-publish --global
+```
 
-`git-repo-publish` is a portable [Agent Skill](https://agentskills.io/specification) for first-time publishing of local Git projects. It previews the target and files to publish, drafts a description and topics for review, and verifies the pushed commit. Interrupted publishes can be resumed.
+Choose your agent when prompted. `--global` makes the skill available across projects. Omit it to install in the current project. [Skills CLI options](https://github.com/vercel-labs/skills/blob/main/docs/commands.md#skills-add)
 
-| | |
-| :-- | :-- |
-| **Use it for** | Publishing a local Git project for the first time, or finishing an interrupted first publish |
-| **Targets** | A new repository, or an empty one you name explicitly. GitHub: personal or organization, private or public. Codeup: organization or group, private or internal |
-| **Not for** | Pushing to repositories that already have branches or tags, or ongoing sync after the first publish |
-| **Runs on** | macOS or Linux, with Git and Python 3.8+; GitHub also requires GitHub CLI (`gh`) |
+<details>
+<summary>How to invoke the skill by client</summary>
 
-### Hosting providers
+| Client | How to invoke the skill |
+| --- | --- |
+| [Codex](https://learn.chatgpt.com/docs/build-skills) | Type `$git-repo-publish` in chat |
+| [Claude Code](https://code.claude.com/docs/en/skills) | Enter `/git-repo-publish` |
+| [Cursor](https://cursor.com/docs/skills) | Type `/` in Agent chat and select `git-repo-publish` |
+| [Gemini CLI](https://geminicli.com/docs/cli/skills/) | Check `/skills list`, then ask Gemini to use `git-repo-publish` |
+| [OpenCode](https://opencode.ai/docs/skills/) | Ask OpenCode to use `git-repo-publish` |
 
-- ✅ GitHub (github.com) — supported
-- GitLab — planned
-- Gitee — planned
-- ✅ Alibaba Cloud Codeup — central edition, HTTPS; [configuration and publishing guide](references/codeup.md)
+</details>
+
+## Use
+
+### Connect GitHub
+
+On a fresh machine, run the command below and follow the prompts to create or upload an SSH public key. Then check that GitHub greets you with the account you intend to publish from. [GitHub CLI login](https://cli.github.com/manual/gh_auth_login) · [Test your SSH connection](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/testing-your-ssh-connection)
+
+```sh
+gh auth login --hostname github.com --web --git-protocol ssh
+ssh -T git@github.com
+```
+
+On the first SSH connection, compare the host key fingerprint with GitHub’s published fingerprint before accepting it. [GitHub SSH key fingerprints](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/githubs-ssh-key-fingerprints)
+
+If SSH already works and you only need to sign in to `gh`, use `gh auth login --hostname github.com --web --skip-ssh-key`. If you use multiple accounts, tell the skill which account and existing SSH host alias to use. The skill checks that the SSH identity matches the selected account before publishing. You can also explicitly choose HTTPS. [GitHub operations guide](references/github.md)
+
+### Preview and confirm
+
+Open the project in your agent and ask it to prepare the publish.
+
+```text
+Use git-repo-publish to preview publishing this project. Suggest a description and topics, let me choose the owner and repository name, and wait for my confirmation.
+```
+
+The skill uses the client's native question interface when available. For example, Codex can use structured questions and Claude Code can use `AskUserQuestion`. In a chat-only client, the same choices appear as text. The website is optional, and the complete preview is shown before you confirm the publish.
+
+Review the account, destination, visibility, branch, and files or commit. A new GitHub repository defaults to **private**, with **SSH** for the push. Confirm using the actual target from the preview.
+
+```text
+Confirm publish to owner/repo
+```
+
+<details>
+<summary>See the preview and confirmation demos</summary>
+
+These examples use sample repository names and commit SHAs. The preview shows the optional HTTPS transport. [Static versions](assets/readme/demo/)
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="assets/readme/demo/gif/preview-dark.gif">
+  <img src="assets/readme/demo/gif/preview-light.gif" width="100%" alt="Illustrative agent reply showing the destination, account, branch, commit, and repository metadata before confirmation">
+</picture>
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="assets/readme/demo/gif/confirm-dark.gif">
+  <img src="assets/readme/demo/gif/confirm-light.gif" width="100%" alt="Illustrative confirmation followed by a verified repository link, branch, and commit SHA">
+</picture>
+
+</details>
+
+## How it works
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="assets/readme/workflow-dark.svg">
+  <img src="assets/readme/workflow-light.svg" width="100%" alt="Inspect and preview locally, confirm the target, publish and verify on GitHub. An interrupted run resumes against the same confirmed target.">
+</picture>
+
+1. **Check the project and destination.** The skill reviews the Git root, branch, commit, and files in scope, including credentials, large files, LFS, submodules, and push-triggered workflows. If the project has no commit yet, it previews the proposed files for the first commit. It can create a new repository or reuse an empty repository you name.
+2. **Publish the confirmed plan.** After you approve the target and preview, the skill creates or reuses the repository, pushes the selected branch, and applies the agreed description, topics, and website as supported by the provider.
+3. **Verify the result.** The skill reads back the remote branch and full commit SHA and reports the repository link. If the run stops partway, it can check the saved progress and resume the same confirmed publish. [Verify or resume a publish](references/github.md#中断恢复)
+
+<details>
+<summary>Prompts for a dry run or an interrupted publish</summary>
+
+**Inspect and preview only**
+
+```text
+Use git-repo-publish to inspect this project and show the publish preview. Do not publish.
+```
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="assets/readme/demo/gif/dry-run-dark.gif">
+  <img src="assets/readme/demo/gif/dry-run-light.gif" width="100%" alt="Illustrative dry run showing the destination status and completed checks before stopping">
+</picture>
+
+**Resume a first publish**
+
+```text
+Use git-repo-publish to check the last publish of this project and resume it to the same confirmed target.
+```
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="assets/readme/demo/gif/resume-dark.gif">
+  <img src="assets/readme/demo/gif/resume-light.gif" width="100%" alt="Illustrative recovery using the saved plan, followed by verification of the same target and commit">
+</picture>
+
+</details>
+
+## Hosting providers
+
+| Destination | Visibility | Push protocol |
+| --- | --- | --- |
+| [GitHub](references/github.md), personal or organization repository | Private or public | SSH by default, HTTPS optional |
+| [Alibaba Cloud Codeup](references/codeup.md), central edition, organization or group repository | Private or internal | HTTPS |
+
+GitLab and Gitee are planned. Use regular Git commands for ongoing sync or for repositories with existing branches or tags.
 
 ### Codeup configuration
 
-Create a profile with your organization ID, full parent path and HTTPS clone username:
+<details>
+<summary>Set up a Codeup profile and preview a publish</summary>
+
+From the installed skill directory, create a profile with your organization ID, full parent path, and HTTPS clone username.
 
 ```sh
 python3 scripts/codeup_publish.py configure --profile work \
@@ -50,7 +145,7 @@ python3 scripts/codeup_publish.py configure --profile work \
 python3 scripts/codeup_publish.py config --profile work
 ```
 
-Set `CODEUP_TOKEN` in your terminal using your secret manager or a hidden prompt; never paste it into chat or commit it. Profiles store only non-secret settings outside the repository. Then ask:
+Set `CODEUP_TOKEN` in your terminal using your secret manager or a hidden prompt. Profiles store only non-secret settings outside the project repository. [Codeup token permissions and recovery](references/codeup.md)
 
 ```text
 Use git-repo-publish to preview publishing this project to Codeup.
@@ -58,99 +153,18 @@ Use profile work and target YOUR_ORG_PATH/team/my-project, private visibility.
 Wait for my confirmation before creating the repository or pushing.
 ```
 
-Codeup supports `private` and `internal` (visible inside the organization). This implementation supports central edition over HTTPS; Region instances and SSH publishing are not supported yet. See the [Codeup guide](references/codeup.md) for token permissions, tags and recovery. The walkthrough and artwork below illustrate GitHub.
-
-## How it works
-
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="assets/readme/workflow-dark.svg">
-  <img alt="Publishing route drawn as a git branch: inspect and preview on your machine, a --confirm-target gate, then publish and verify on GitHub. If a publish is interrupted, a branch resumes against the same confirmed target and merges back into verify." src="assets/readme/workflow-light.svg" width="100%">
-</picture>
-
-- **Preview before anything leaves your machine.** The agent shows the platform, project path, branch and full SHA, account, owner, repository name, visibility, protocol, and the drafted description and topics — plus what it found when checking for credentials, large files, LFS, submodules, and push-triggered workflows.
-- **Nothing is pushed without an explicit confirmation.** A suggested owner, a logged-in account, or the original request never counts as approval. You confirm the exact `owner/repo` after seeing the full preview.
-- **Every publish is read back, and can be resumed.** After pushing, the script reads the repository and branch back from GitHub. If a run stops partway, the agent re-inspects and resumes the same confirmed target instead of starting over.
-
-## Install
-
-Copy the entire skill folder, including `SKILL.md`, `scripts/`, and `references/`, to a skills directory your agent reads. Name the copied folder `git-repo-publish`.
-
-| Client | Project skill directory | How to start |
-| --- | --- | --- |
-| [Codex](https://learn.chatgpt.com/docs/build-skills#where-codex-loads-local-skills) | `.agents/skills/git-repo-publish/` | Invoke `$git-repo-publish` in chat. |
-| [Claude Code](https://code.claude.com/docs/en/skills#choose-where-skills-load) | `.claude/skills/git-repo-publish/` | Run `/git-repo-publish`. |
-| [Cursor](https://cursor.com/docs/skills#skill-directories) | `.agents/skills/git-repo-publish/` | Type `/` in Agent chat and select the skill. |
-| [Gemini CLI](https://geminicli.com/docs/cli/skills/) | `.agents/skills/git-repo-publish/` | Check `/skills list` and ask Gemini to use the skill by name. |
-| [OpenCode](https://opencode.ai/docs/skills/#discovery) | `.agents/skills/git-repo-publish/` | Ask OpenCode to load and use the skill by name. |
-
-> [!TIP]
-> The four clients that read `.agents/skills/` can share a single copy in the project. Other clients that support the Agent Skills format can load the same folder from their documented skills directory. `agents/openai.yaml` supplies optional interface metadata for Codex.
-
-## Use
-
-Run the agent where it can access the source project and an authenticated GitHub CLI session. Ask it to prepare a preview before it publishes:
-
-```text
-Use git-repo-publish to preview publishing this project. Suggest a description and topics, let me choose the owner and repository name, and wait for my confirmation.
-```
-
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="assets/readme/demo/gif/preview-dark.gif">
-  <img alt="Illustrative demo: the preview prompt is typed, then the agent replies with platform, account, owner, repository, visibility, protocol, branch, project path, full commit SHA, description, topics and website, ending with the next instruction and an Awaiting confirmation stamp" src="assets/readme/demo/gif/preview-light.gif" width="100%">
-</picture>
-
-<sub>Demos are illustrative: field names and order follow <a href="SKILL.md">SKILL.md</a>, values are examples. Looping GIFs; static SVG versions are in <a href="assets/readme/demo/"><code>assets/readme/demo/</code></a>.</sub>
-
-After reviewing the preview, reply with the target it shows, for example:
-
-```text
-Confirm publish to owner/repo
-```
-
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="assets/readme/demo/gif/confirm-dark.gif">
-  <img alt="Illustrative demo: Confirm publish to owner/repo passes the --confirm-target gate, then the agent reports the repository link, owner, visibility, branch, metadata and the commit SHA read back from GitHub" src="assets/readme/demo/gif/confirm-light.gif" width="100%">
-</picture>
-
-<details>
-<summary><b>More prompts</b></summary>
-
-Dry run only — inspect and preview, then stop:
-
-```text
-Use git-repo-publish to inspect this project and show the publish preview. Do not publish.
-```
-
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="assets/readme/demo/gif/dry-run-dark.gif">
-  <img alt="Illustrative demo: the dry-run prompt returns the destination status, account, owner, visibility, branch, commit SHA and the checks performed, then stops with nothing pushed" src="assets/readme/demo/gif/dry-run-light.gif" width="100%">
-</picture>
-
-Resume an interrupted publish:
-
-```text
-Use git-repo-publish to check the last publish of this project and resume it to the same confirmed target.
-```
-
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="assets/readme/demo/gif/resume-dark.gif">
-  <img alt="Illustrative demo: the resume prompt reads the saved publish record, re-inspects the repository, retries the same commit and ends with every operation verified against the same confirmed target" src="assets/readme/demo/gif/resume-light.gif" width="100%">
-</picture>
-
 </details>
-
-The skill uses the client's native question interface when available. For example, Codex can use structured questions and Claude Code can use `AskUserQuestion`. In a chat-only client, the same choices appear as text. The website is optional, and the complete preview is shown before you confirm the publish.
 
 ## Requirements
 
 | | |
-| :-- | :-- |
-| **Platform** | macOS or Linux |
-| **Tools** | Git and Python 3.8+; GitHub requires a recent [GitHub CLI](https://cli.github.com/) |
-| **Authentication** | GitHub: accounts logged in with `gh`. Codeup: a profile and personal access token supplied through an environment variable |
-| **Push protocol** | GitHub defaults to SSH and supports existing SSH aliases. HTTPS is optional. Codeup uses HTTPS. |
+| --- | --- |
+| **Runtime** | macOS or Linux, Git, and Python 3.8+ |
+| **Installer** | Node.js 22.20+ with npm and `npx` |
+| **GitHub authentication** | Recent GitHub CLI (`gh`), plus a matching SSH key when using SSH |
+| **Codeup authentication** | A profile and a personal access token supplied through an environment variable |
 
-It uses the GitHub account you select, with SSH or HTTPS for the push. See the [GitHub operations guide](references/github.md) for authentication, command details, [resuming an interrupted publish](references/github.md#中断恢复), and how to [record trial publishes](references/github.md#三次真实发布的记录方法).
+[GitHub operations guide](references/github.md) · [Codeup operations guide](references/codeup.md) · [Record trial publishes](references/github.md#三次真实发布的记录方法)
 
 ## License
 
