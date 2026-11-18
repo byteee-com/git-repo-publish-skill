@@ -535,7 +535,8 @@ def main(argv=None):
         command.add_argument("--root", default=".")
         command.add_argument("--ssh-host")
     for command in (probe, send):
-        command.add_argument("--protocol", default="https", choices=("https", "ssh"))
+        command.add_argument("--protocol", default="ssh", choices=("ssh", "https"),
+                             help="Git transport (default: %(default)s).")
     for command in (send, resume):
         command.add_argument("--confirm-target", required=True,
                              help="The owner/repo explicitly confirmed by the user.")

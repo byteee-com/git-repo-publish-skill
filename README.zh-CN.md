@@ -141,7 +141,7 @@ Codeup 可见性为 `private`（私有）或 `internal`（组织内公开）。�
 | 平台 | macOS 或 Linux |
 | 工具 | Git、Python 3.8+；GitHub 需要新版 [GitHub CLI](https://cli.github.com/) |
 | 登录 | GitHub 通过 `gh` 登录；Codeup 使用配置档和通过环境变量提供的个人访问令牌 |
-| 推送协议 | GitHub 支持 SSH 或 HTTPS，可使用已有 SSH 别名；Codeup 使用 HTTPS |
+| 推送协议 | GitHub 默认 SSH，支持已有 SSH 别名，也可选 HTTPS。Codeup 使用 HTTPS。 |
 
 登录方式和具体命令见 [GitHub 操作手册](references/github.md)。手册也介绍了如何[恢复中断的发布](references/github.md#中断恢复)和[记录试用结果](references/github.md#三次真实发布的记录方法)。
 

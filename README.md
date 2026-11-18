@@ -148,7 +148,7 @@ The skill uses the client's native question interface when available. For exampl
 | **Platform** | macOS or Linux |
 | **Tools** | Git and Python 3.8+; GitHub requires a recent [GitHub CLI](https://cli.github.com/) |
 | **Authentication** | GitHub: accounts logged in with `gh`. Codeup: a profile and personal access token supplied through an environment variable |
-| **Push protocol** | GitHub: HTTPS or SSH, including existing SSH aliases. Codeup: HTTPS |
+| **Push protocol** | GitHub defaults to SSH and supports existing SSH aliases. HTTPS is optional. Codeup uses HTTPS. |
 
 It uses the GitHub account you select, with SSH or HTTPS for the push. See the [GitHub operations guide](references/github.md) for authentication, command details, [resuming an interrupted publish](references/github.md#中断恢复), and how to [record trial publishes](references/github.md#三次真实发布的记录方法).
 

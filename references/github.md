@@ -11,8 +11,9 @@ python3 "$publisher" inspect --root "$project_root" --target "$target" \
   --account "$account" --protocol "$protocol"
 ```
 
-- 缺账号时在用户终端用 `gh auth login --hostname github.com --web --skip-ssh-key` 登录。添加多个账号时分别登录，再重跑 `accounts`。脚本在本地读取所选账号的凭据并调用 `/user` 核验，不打印令牌或切换活跃账号。组织列表可能受 token 权限和 SSO 限制。
-- `--root` 默认当前目录。`--target` 接受 `owner/repo`、`https://github.com/owner/repo` 和 `git@github.com:owner/repo.git`。也可用 `--owner` 和 `--repo`。协议默认 HTTPS。选择 SSH 时可加 `--ssh-host "$alias"`，使用绑定到 github.com 的现有本机别名。首次连接请核验 [GitHub 官方 SSH 主机指纹](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/githubs-ssh-key-fingerprints)。
+- 缺账号时在用户终端用 `gh auth login --hostname github.com --web --skip-ssh-key` 登录。此命令用于取得 GitHub API 凭据，SSH 推送使用本机已有的密钥。添加多个账号时分别登录，再重跑 `accounts`。脚本在本地读取所选账号的凭据并调用 `/user` 核验，不打印令牌或切换活跃账号。组织列表可能受 token 权限和 SSO 限制。
+- `--root` 默认当前目录。`--target` 接受 `owner/repo`、`https://github.com/owner/repo` 和 `git@github.com:owner/repo.git`。也可用 `--owner` 和 `--repo`。`inspect` 和 `publish` 默认用 SSH，可显式传 `--protocol https` 使用所选账号的 `gh` 凭据。目标地址的格式不决定推送协议。
+- SSH 默认连接 `github.com`。多账号可传 `--ssh-host "$alias"` 使用该账号已有的本机 SSH 别名，并在检查与发布时传入同一别名。脚本会核对 GitHub 返回的 SSH 登录身份，只有该身份与 `--account` 一致才继续。首次连接请核验 [GitHub 官方 SSH 主机指纹](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/githubs-ssh-key-fingerprints)。
 - `inspect` 可用于没有初始化 Git 的目录，返回本地路径、Git 根目录、当前分支和 HEAD，以及远端仓库 ID、可见性、权限和 refs。目的地会显示 `empty`、`nonempty` 或 `missing_or_hidden`。后者无法区分未创建和权限隐藏。目标非空时结束首次发布流程。
 
 ## 发布与验证
@@ -40,6 +41,8 @@ python3 "$publisher" resume --root "$project_root" --target "$target" \
 ```
 
 `publish` 将计划和 `operations.repository`、`operations.push`、`operations.metadata` 保存到 Git 目录下的 `github-repo-publish`。状态 `requested` 代表已发出或即将发出请求，结果待回读，`verified` 代表已验证，`skipped` 代表计划里没有资料变更。记录不含登录凭据。Skill 改名为 `git-repo-publish` 后，继续使用这个目录读取和写入恢复记录。
+
+恢复前运行 `inspect` 时，沿用恢复记录里的账号、协议和 SSH 别名。`resume` 直接读取记录里的推送协议和 SSH 别名，早先使用 HTTPS 的记录也按原计划恢复。
 
 - **建仓已确认。** 用 `inspect` 核对仓库 ID 和可见性，再 `resume`。远端仍为空时重试同一个提交。远端分支已经处于计划中的 SHA 时直接验证并进入资料阶段。
 - **建仓请求没有收到响应。** 先 `inspect`。同名仓库仍不可见时，`resume` 可重试创建。出现同名仓库时核对 ID、归属、可见性和是否为空，得到用户明确同意后使用 `resume --repo-id "$reviewed_repo_id"`。遇到不同仓库 ID、可见性变化或未核对的远端提交，停在检查。
